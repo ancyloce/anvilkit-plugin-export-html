@@ -1,18 +1,10 @@
 import type { PageIRAsset } from "@anvilkit/core/types";
 import { describe, expect, it, vi } from "vitest";
-
-import { encodeBase64 } from "../internal/base64.js";
 import { inlineAssets } from "../inline-assets.js";
+import { encodeBase64 } from "../internal/base64.js";
 
 const pngBytes = new Uint8Array([
-	0x89,
-	0x50,
-	0x4e,
-	0x47,
-	0x0d,
-	0x0a,
-	0x1a,
-	0x0a,
+	0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
 ]);
 
 describe("inlineAssets", () => {

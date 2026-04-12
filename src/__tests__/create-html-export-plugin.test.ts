@@ -1,5 +1,9 @@
 import { compilePlugins, StudioConfigSchema } from "@anvilkit/core";
-import type { PageIR, StudioPlugin, StudioPluginContext } from "@anvilkit/core/types";
+import type {
+	PageIR,
+	StudioPlugin,
+	StudioPluginContext,
+} from "@anvilkit/core/types";
 import { describe, expect, it, vi } from "vitest";
 
 import { createHtmlExportPlugin } from "../create-html-export-plugin.js";
