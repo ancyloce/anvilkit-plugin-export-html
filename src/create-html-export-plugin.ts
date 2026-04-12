@@ -1,6 +1,7 @@
 import type { StudioPlugin, StudioPluginMeta } from "@anvilkit/core/types";
 
 import { htmlFormat } from "./format-definition.js";
+import { exportHtmlHeaderAction } from "./header-action.js";
 import type { HtmlExportOptions } from "./types.js";
 
 const htmlExportPluginMeta: StudioPluginMeta = {
@@ -20,6 +21,7 @@ export function createHtmlExportPlugin(
 			return {
 				meta: htmlExportPluginMeta,
 				exportFormats: [htmlFormat],
+				headerActions: [exportHtmlHeaderAction],
 			};
 		},
 	};
