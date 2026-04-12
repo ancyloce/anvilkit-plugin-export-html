@@ -12,9 +12,7 @@ export function substituteAssets(
 
 	for (const [assetId, dataUrl] of inlined) {
 		const markerPattern = new RegExp(
-			'data-asset-src="[^"]*" data-asset-id="' +
-				escapeRegex(assetId) +
-				'"',
+			'data-asset-src="[^"]*" data-asset-id="' + escapeRegex(assetId) + '"',
 			"g",
 		);
 

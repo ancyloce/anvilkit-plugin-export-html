@@ -14,11 +14,11 @@ export const htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {
 	mimeType: "text/html",
 	run: async (ir, options) => {
 		const ctx = makeEmitContext();
-		const { html, usedClassnames, warnings: htmlWarnings } = emitHtml(
-			ir,
-			options,
-			ctx,
-		);
+		const {
+			html,
+			usedClassnames,
+			warnings: htmlWarnings,
+		} = emitHtml(ir, options, ctx);
 		const { inlined, warnings: assetWarnings } = await inlineAssets(ir.assets, {
 			thresholdBytes: options.inlineAssetThresholdBytes ?? 32_768,
 			fetchAsset: options.fetchAsset ?? defaultFetchAsset,

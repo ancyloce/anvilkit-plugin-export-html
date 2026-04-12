@@ -98,7 +98,8 @@ function emitNode(node: PageIRNode, ctx: EmitContext): string {
 	ctx.warnings.push({
 		level: "warn",
 		code: "UNKNOWN_COMPONENT_EMITTER",
-		message: 'No HTML emitter registered for component type "' + node.type + '".',
+		message:
+			'No HTML emitter registered for component type "' + node.type + '".',
 		nodeId: node.id,
 	});
 
@@ -113,12 +114,18 @@ function emitHero(node: PageIRNode, ctx: EmitContext): string {
 		"eyebrow",
 		"badgeLabel",
 	]);
-	const eyebrowHref = normalizeUrl(getFirstString(node.props, ["announcementHref"]));
+	const eyebrowHref = normalizeUrl(
+		getFirstString(node.props, ["announcementHref"]),
+	);
 	const eyebrowOpenInNewTab = getBooleanProp(
 		node.props,
 		"announcementOpenInNewTab",
 	);
-	const headline = getFirstString(node.props, ["headline", "title"], "Untitled Hero");
+	const headline = getFirstString(
+		node.props,
+		["headline", "title"],
+		"Untitled Hero",
+	);
 	const description = getFirstString(node.props, [
 		"description",
 		"subtitle",
@@ -131,10 +138,9 @@ function emitHero(node: PageIRNode, ctx: EmitContext): string {
 	const linuxHref = normalizeUrl(
 		getFirstString(node.props, ["linuxHref", "primaryCtaHref"]),
 	);
-	const linuxOpenInNewTab = getBooleanProp(
-		node.props,
-		"linuxOpenInNewTab",
-	) || getBooleanProp(node.props, "primaryCtaOpenInNewTab");
+	const linuxOpenInNewTab =
+		getBooleanProp(node.props, "linuxOpenInNewTab") ||
+		getBooleanProp(node.props, "primaryCtaOpenInNewTab");
 	const windowsLabel = getFirstString(node.props, [
 		"windowsLabel",
 		"secondaryCtaLabel",
@@ -142,10 +148,9 @@ function emitHero(node: PageIRNode, ctx: EmitContext): string {
 	const windowsHref = normalizeUrl(
 		getFirstString(node.props, ["windowsHref", "secondaryCtaHref"]),
 	);
-	const windowsOpenInNewTab = getBooleanProp(
-		node.props,
-		"windowsOpenInNewTab",
-	) || getBooleanProp(node.props, "secondaryCtaOpenInNewTab");
+	const windowsOpenInNewTab =
+		getBooleanProp(node.props, "windowsOpenInNewTab") ||
+		getBooleanProp(node.props, "secondaryCtaOpenInNewTab");
 	const actions = [
 		renderButtonLike(
 			linuxLabel,
@@ -178,9 +183,7 @@ function emitHero(node: PageIRNode, ctx: EmitContext): string {
 		'<p class="ak-hero__description">' +
 		escapeHtml(description) +
 		"</p>" +
-		(actions
-			? '<div class="ak-hero__actions">' + actions + "</div>"
-			: "") +
+		(actions ? '<div class="ak-hero__actions">' + actions + "</div>" : "") +
 		"</div>" +
 		"</section>"
 	);
@@ -209,14 +212,13 @@ function emitNavbar(node: PageIRNode, ctx: EmitContext): string {
 		logoContent = escapeHtml(getFirstString(logo, ["text"], "Brand"));
 	}
 
-	const brand =
-		logoHref
-			? '<a class="ak-navbar__brand"' +
-				renderHrefAttributes(logoHref, false) +
-				">" +
-				logoContent +
-				"</a>"
-			: '<div class="ak-navbar__brand">' + logoContent + "</div>";
+	const brand = logoHref
+		? '<a class="ak-navbar__brand"' +
+			renderHrefAttributes(logoHref, false) +
+			">" +
+			logoContent +
+			"</a>"
+		: '<div class="ak-navbar__brand">' + logoContent + "</div>";
 
 	const menu = items.length
 		? '<ul class="ak-navbar__menu">' +
@@ -229,11 +231,7 @@ function emitNavbar(node: PageIRNode, ctx: EmitContext): string {
 
 					if (!href) {
 						return (
-							"<li><span" +
-							current +
-							">" +
-							escapeHtml(label) +
-							"</span></li>"
+							"<li><span" + current + ">" + escapeHtml(label) + "</span></li>"
 						);
 					}
 
@@ -299,19 +297,14 @@ function emitPricingMinimal(node: PageIRNode, ctx: EmitContext): string {
 	ctx.usedClassnames.add("ak-pricing-minimal");
 
 	const headline = getFirstString(node.props, ["headline", "title"], "Pricing");
-	const description = getFirstString(node.props, [
-		"description",
-		"subtitle",
-	]);
+	const description = getFirstString(node.props, ["description", "subtitle"]);
 	const plans = getRecordArrayProp(node.props, "plans");
 	const cards = plans
 		.map((plan) => {
 			const name = getFirstString(plan, ["name"], "Plan");
 			const planDescription = getFirstString(plan, ["description"]);
 			const price = getFirstString(plan, ["price"], "$0");
-			const billingPeriodLabel = getFirstString(plan, [
-				"billingPeriodLabel",
-			]);
+			const billingPeriodLabel = getFirstString(plan, ["billingPeriodLabel"]);
 			const badgeLabel = getFirstString(plan, ["badgeLabel"]);
 			const featured = getBooleanProp(plan, "featured");
 			const ctaLabel = getFirstString(plan, ["ctaLabel"], "Get started");
@@ -324,7 +317,7 @@ function emitPricingMinimal(node: PageIRNode, ctx: EmitContext): string {
 				'<article class="ak-pricing-minimal__card" data-featured="' +
 				escapeAttr(String(featured)) +
 				'">' +
-				'<header><h3>' +
+				"<header><h3>" +
 				escapeHtml(name) +
 				"</h3>" +
 				(badgeLabel
@@ -333,9 +326,7 @@ function emitPricingMinimal(node: PageIRNode, ctx: EmitContext): string {
 						"</p>"
 					: "") +
 				"</header>" +
-				(planDescription
-					? "<p>" + escapeHtml(planDescription) + "</p>"
-					: "") +
+				(planDescription ? "<p>" + escapeHtml(planDescription) + "</p>" : "") +
 				'<div class="ak-pricing-minimal__price">' +
 				escapeHtml(price) +
 				"</div>" +
@@ -366,9 +357,7 @@ function emitPricingMinimal(node: PageIRNode, ctx: EmitContext): string {
 		escapeHtml(description) +
 		"</p>" +
 		"</div>" +
-		(cards
-			? '<div class="ak-pricing-minimal__grid">' + cards + "</div>"
-			: "") +
+		(cards ? '<div class="ak-pricing-minimal__grid">' + cards + "</div>" : "") +
 		"</div>" +
 		"</section>"
 	);
@@ -436,10 +425,7 @@ function emitSection(node: PageIRNode, ctx: EmitContext): string {
 		"highlightedHeadline",
 		"highlightedTitle",
 	]);
-	const description = getFirstString(node.props, [
-		"description",
-		"subtitle",
-	]);
+	const description = getFirstString(node.props, ["description", "subtitle"]);
 
 	return (
 		'<section class="ak-section">' +
@@ -631,7 +617,11 @@ function emitHelps(node: PageIRNode, ctx: EmitContext): string {
 function emitLogoClouds(node: PageIRNode, ctx: EmitContext): string {
 	ctx.usedClassnames.add("ak-logo-clouds");
 
-	const title = getFirstString(node.props, ["title", "headline"], "Brands love us");
+	const title = getFirstString(
+		node.props,
+		["title", "headline"],
+		"Brands love us",
+	);
 	const subtitle = getFirstString(node.props, ["subtitle", "description"]);
 
 	return (
@@ -652,11 +642,7 @@ function emitLogoClouds(node: PageIRNode, ctx: EmitContext): string {
 				escapeAttr(item.label + " logo") +
 				'" loading="lazy" decoding="async">';
 
-			return (
-				'<li class="ak-logo-clouds__item">' +
-				image +
-				"</li>"
-			);
+			return '<li class="ak-logo-clouds__item">' + image + "</li>";
 		}).join("") +
 		"</ul>" +
 		"</div>" +
@@ -747,21 +733,16 @@ function renderButtonLike(
 	);
 }
 
-function renderHrefAttributes(
-	href: string,
-	openInNewTab: boolean,
-): string {
+function renderHrefAttributes(href: string, openInNewTab: boolean): string {
 	return (
 		' href="' +
 		escapeAttr(href) +
 		'"' +
-		(openInNewTab
-			? ' target="_blank" rel="noreferrer noopener"'
-			: "")
+		(openInNewTab ? ' target="_blank" rel="noreferrer noopener"' : "")
 	);
 }
 
-function renderImage(
+export function renderImage(
 	url: string,
 	alt: string,
 	ctx: EmitContext,
@@ -774,6 +755,15 @@ function renderImage(
 	}
 
 	const assetId = ctx.assetIdsByUrl?.get(safeUrl);
+	const missingAlt = !alt.trim();
+
+	if (missingAlt) {
+		ctx.warnings.push({
+			level: "warn",
+			code: "MISSING_ALT",
+			message: "Image rendered without alt text.",
+		});
+	}
 
 	if (assetId) {
 		return (
