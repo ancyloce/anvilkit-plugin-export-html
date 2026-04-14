@@ -22,14 +22,6 @@
 						"isOptional": true,
 						"isReadonly": true
 					},
-					"sources": [
-						{
-							"fileName": "types.ts",
-							"line": 9,
-							"character": 10,
-							"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L9"
-						}
-					],
 					"type": {
 						"type": "reference",
 						"target": 6,
@@ -46,14 +38,6 @@
 						"isOptional": true,
 						"isReadonly": true
 					},
-					"sources": [
-						{
-							"fileName": "types.ts",
-							"line": 7,
-							"character": 10,
-							"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L7"
-						}
-					],
 					"type": {
 						"type": "intrinsic",
 						"name": "number"
@@ -68,14 +52,6 @@
 						"isOptional": true,
 						"isReadonly": true
 					},
-					"sources": [
-						{
-							"fileName": "types.ts",
-							"line": 6,
-							"character": 10,
-							"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L6"
-						}
-					],
 					"type": {
 						"type": "intrinsic",
 						"name": "boolean"
@@ -90,14 +66,6 @@
 						"isOptional": true,
 						"isReadonly": true
 					},
-					"sources": [
-						{
-							"fileName": "types.ts",
-							"line": 8,
-							"character": 10,
-							"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L8"
-						}
-					],
 					"type": {
 						"type": "intrinsic",
 						"name": "string"
@@ -113,14 +81,6 @@
 						14,
 						16
 					]
-				}
-			],
-			"sources": [
-				{
-					"fileName": "types.ts",
-					"line": 5,
-					"character": 17,
-					"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L5"
 				}
 			],
 			"indexSignatures": [
@@ -178,14 +138,6 @@
 			"variant": "declaration",
 			"kind": 2097152,
 			"flags": {},
-			"sources": [
-				{
-					"fileName": "types.ts",
-					"line": 1,
-					"character": 12,
-					"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L1"
-				}
-			],
 			"type": {
 				"type": "reflection",
 				"declaration": {
@@ -237,14 +189,6 @@
 													"variant": "declaration",
 													"kind": 1024,
 													"flags": {},
-													"sources": [
-														{
-															"fileName": "types.ts",
-															"line": 3,
-															"character": 15,
-															"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L3"
-														}
-													],
 													"type": {
 														"type": "reference",
 														"target": {
@@ -262,14 +206,6 @@
 													"variant": "declaration",
 													"kind": 1024,
 													"flags": {},
-													"sources": [
-														{
-															"fileName": "types.ts",
-															"line": 3,
-															"character": 34,
-															"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/types.ts#L3"
-														}
-													],
 													"type": {
 														"type": "intrinsic",
 														"name": "string"
@@ -304,14 +240,6 @@
 			"flags": {
 				"isConst": true
 			},
-			"sources": [
-				{
-					"fileName": "header-action.ts",
-					"line": 3,
-					"character": 13,
-					"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/header-action.ts#L3"
-				}
-			],
 			"type": {
 				"type": "reference",
 				"target": {
@@ -332,14 +260,6 @@
 			"flags": {
 				"isConst": true
 			},
-			"sources": [
-				{
-					"fileName": "format-definition.ts",
-					"line": 10,
-					"character": 13,
-					"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/format-definition.ts#L10"
-				}
-			],
 			"type": {
 				"type": "reference",
 				"target": {
@@ -366,14 +286,6 @@
 			"variant": "declaration",
 			"kind": 64,
 			"flags": {},
-			"sources": [
-				{
-					"fileName": "create-html-export-plugin.ts",
-					"line": 15,
-					"character": 16,
-					"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/create-html-export-plugin.ts#L15"
-				}
-			],
 			"signatures": [
 				{
 					"id": 2,
@@ -381,14 +293,6 @@
 					"variant": "signature",
 					"kind": 4096,
 					"flags": {},
-					"sources": [
-						{
-							"fileName": "create-html-export-plugin.ts",
-							"line": 15,
-							"character": 16,
-							"url": "https://github.com/ancyloce/anvilkit-plugin-export-html/blob/f93b88ebcf7f5057fd4aeb98288d05d8806f30c6/src/create-html-export-plugin.ts#L15"
-						}
-					],
 					"parameters": [
 						{
 							"id": 3,
@@ -451,39 +355,185 @@
 	"readme": [
 		{
 			"kind": "text",
-			"text": "# @anvilkit/plugin-export-html\n\nHTML export format package for Anvilkit Studio.\n\n## Status\n\n"
+			"text": "# @anvilkit/plugin-export-html\n\nHTML export plugin for Anvilkit Studio. "
 		},
 		{
 			"kind": "code",
-			"text": "`0.1.0-alpha.0`"
+			"text": "`@anvilkit/plugin-export-html`"
 		},
 		{
 			"kind": "text",
-			"text": " scaffold only. This package currently registers a stub HTML export format and returns a placeholder HTML document.\n\n## Quickstart\n\n"
+			"text": "\nregisters the first real Phase 3 export format, turning "
 		},
 		{
 			"kind": "code",
-			"text": "```ts\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\n\nconst htmlPlugin = createHtmlExportPlugin();\n```"
+			"text": "`PageIR`"
 		},
 		{
 			"kind": "text",
-			"text": "\n\nUse the returned plugin in your Studio plugin list. It contributes a single export format with id "
+			"text": "\ndocuments into standalone HTML with emitted CSS, optional asset\ninlining, and a matching Studio header action for interactive export\nflows.\n\n> **Alpha status (0.1.x).** The package surface is implemented and\n> tested, but the emitted HTML/CSS contract may still evolve before\n> "
 		},
 		{
 			"kind": "code",
-			"text": "`\"html\"`"
+			"text": "`0.1.0`"
 		},
 		{
 			"kind": "text",
-			"text": ".\n\n## Roadmap\n\nReal HTML emitters and option threading land in "
+			"text": ".\n\n## Install\n\n"
 		},
 		{
 			"kind": "code",
-			"text": "`phase3-010`"
+			"text": "```bash\npnpm add @anvilkit/plugin-export-html @anvilkit/core react react-dom @puckeditor/core\n```"
 		},
 		{
 			"kind": "text",
-			"text": "."
+			"text": "\n\n## Quickstart\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\nimport { Studio } from \"@anvilkit/core\";\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\nimport { puckConfig } from \"./puck-config\";\n\nconst htmlExport = createHtmlExportPlugin({\n  title: \"Marketing page\",\n  inlineStyles: true,\n  inlineAssetThresholdBytes: 32_768,\n});\n\n<Studio puckConfig={puckConfig} plugins={[htmlExport]} />;\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n## Public API\n\n| Export | Purpose |\n| ------ | ------- |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`createHtmlExportPlugin`"
+		},
+		{
+			"kind": "text",
+			"text": " | Register the HTML export format and its header action with "
+		},
+		{
+			"kind": "code",
+			"text": "`@anvilkit/core`"
+		},
+		{
+			"kind": "text",
+			"text": ". |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`htmlFormat`"
+		},
+		{
+			"kind": "text",
+			"text": " | Direct "
+		},
+		{
+			"kind": "code",
+			"text": "`ExportFormatDefinition`"
+		},
+		{
+			"kind": "text",
+			"text": " for headless export pipelines and tests. |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`exportHtmlHeaderAction`"
+		},
+		{
+			"kind": "text",
+			"text": " | Studio header action that exposes the HTML export affordance in host UIs. |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`HtmlExportOptions`"
+		},
+		{
+			"kind": "text",
+			"text": " | Configure document title, asset inlining, inline styles, and custom asset fetchers. |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`FetchAssetFn`"
+		},
+		{
+			"kind": "text",
+			"text": " | Host-supplied async asset loader used when inlining external assets. |\n\n## Phase 3 references\n\nSee the [Phase 3 plan]("
+		},
+		{
+			"kind": "relative-link",
+			"text": "../../../docs/plans/phase-3-export-ai-pipeline-plan.md",
+			"target": 2
+		},
+		{
+			"kind": "text",
+			"text": ")\n("
+		},
+		{
+			"kind": "code",
+			"text": "`M4 — @anvilkit/plugin-export-html`"
+		},
+		{
+			"kind": "text",
+			"text": ") and the\n[architecture package catalog]("
+		},
+		{
+			"kind": "relative-link",
+			"text": "../../../docs/ai-context/anvilkit-architecture.md",
+			"target": 3
+		},
+		{
+			"kind": "text",
+			"text": ")\n("
+		},
+		{
+			"kind": "code",
+			"text": "`§7 — @anvilkit/plugins [Stubs Exist]`"
+		},
+		{
+			"kind": "text",
+			"text": ") for the export-plugin role and\nPhase 3 dependency layering.\n\n## Peer dependencies\n\n| Package | Version |\n| ------- | ------- |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`react`"
+		},
+		{
+			"kind": "text",
+			"text": " | "
+		},
+		{
+			"kind": "code",
+			"text": "`^18.2.0`"
+		},
+		{
+			"kind": "text",
+			"text": " |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`react-dom`"
+		},
+		{
+			"kind": "text",
+			"text": " | "
+		},
+		{
+			"kind": "code",
+			"text": "`^18.2.0`"
+		},
+		{
+			"kind": "text",
+			"text": " |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`@puckeditor/core`"
+		},
+		{
+			"kind": "text",
+			"text": " | "
+		},
+		{
+			"kind": "code",
+			"text": "`^0.19.0`"
+		},
+		{
+			"kind": "text",
+			"text": " |"
 		}
 	],
 	"symbolIdMap": {
@@ -581,13 +631,15 @@
 	"files": {
 		"entries": {
 			"1": "src/index.ts",
-			"2": "README.md",
-			"3": ""
+			"2": "../../../docs/plans/phase-3-export-ai-pipeline-plan.md",
+			"3": "../../../docs/ai-context/anvilkit-architecture.md",
+			"4": "README.md",
+			"5": ""
 		},
 		"reflections": {
 			"1": 0,
-			"2": 0,
-			"3": 0
+			"4": 0,
+			"5": 0
 		}
 	}
 }
