@@ -748,7 +748,7 @@ export function renderImage(
 	ctx: EmitContext,
 	extraAttributes: string,
 ): string {
-	const safeUrl = normalizeUrl(url);
+	const safeUrl = normalizeUrl(url, { allowSafeDataImage: true });
 
 	if (!safeUrl) {
 		return "";
@@ -790,7 +790,14 @@ export function renderImage(
 	);
 }
 
-function normalizeUrl(input: string): string | undefined {
+interface NormalizeUrlOptions {
+	readonly allowSafeDataImage?: boolean;
+}
+
+export function normalizeUrl(
+	input: string,
+	options: NormalizeUrlOptions = {},
+): string | undefined {
 	const candidate = input.trim();
 
 	if (!candidate) {
@@ -799,15 +806,22 @@ function normalizeUrl(input: string): string | undefined {
 
 	const collapsed = stripUnsafeAscii(candidate).toLowerCase();
 
+	if (collapsed.startsWith("javascript:") || collapsed.startsWith("vbscript:")) {
+		return undefined;
+	}
+
 	if (
-		collapsed.startsWith("javascript:") ||
-		collapsed.startsWith("vbscript:") ||
-		collapsed.startsWith("data:")
+		collapsed.startsWith("data:") &&
+		(!options.allowSafeDataImage || !isSafeDataImageUrl(candidate))
 	) {
 		return undefined;
 	}
 
 	return candidate;
+}
+
+function isSafeDataImageUrl(input: string): boolean {
+	return /^data:image\/(?:png|jpe?g|gif|webp|avif)(?:;[^,]*)?,/i.test(input);
 }
 
 function stripUnsafeAscii(input: string): string {
