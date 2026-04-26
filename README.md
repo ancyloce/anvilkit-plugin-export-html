@@ -20,27 +20,39 @@ pnpm add @anvilkit/plugin-export-html @anvilkit/core react react-dom @puckeditor
 
 ```ts
 import { Studio } from "@anvilkit/core";
+import { puckDataToIR } from "@anvilkit/ir";
 import { createHtmlExportPlugin } from "@anvilkit/plugin-export-html";
 import { puckConfig } from "./puck-config";
 
 const htmlExport = createHtmlExportPlugin({
   title: "Marketing page",
-  inlineStyles: true,
+  lang: "en",
   inlineAssetThresholdBytes: 32_768,
+  // Optional — when supplied, the "Download HTML" header action runs
+  // the export end-to-end and emits `anvilkit:export:ready` with the
+  // resulting payload. Otherwise it emits `anvilkit:export:request`
+  // for the host to handle.
+  buildIR: (ctx) => puckDataToIR(ctx.getData(), puckConfig),
 });
 
 <Studio puckConfig={puckConfig} plugins={[htmlExport]} />;
 ```
 
+Options passed to `createHtmlExportPlugin()` are used as defaults for
+every export run; host calls to `exportAs("html", { … })` shallow-merge
+on top.
+
 ## Public API
 
 | Export | Purpose |
 | ------ | ------- |
-| `createHtmlExportPlugin` | Register the HTML export format and its header action with `@anvilkit/core`. |
+| `createHtmlExportPlugin` | Register the HTML export format and its header action with `@anvilkit/core`. Options passed here become run-time defaults. |
 | `htmlFormat` | Direct `ExportFormatDefinition` for headless export pipelines and tests. |
-| `exportHtmlHeaderAction` | Studio header action that exposes the HTML export affordance in host UIs. |
-| `HtmlExportOptions` | Configure document title, asset inlining, inline styles, and custom asset fetchers. |
+| `createExportHtmlHeaderAction` | Build a header action bound to a configured format and options. Used internally by `createHtmlExportPlugin`. |
+| `exportHtmlHeaderAction` | Default unbound header action; emits an `anvilkit:export:request` event for hosts to handle. |
+| `HtmlExportOptions` | Configure document title, language, asset inlining, custom asset fetchers, and an optional `buildIR` callback. |
 | `FetchAssetFn` | Host-supplied async asset loader used when inlining external assets. |
+| `IRBuilder` | Callback signature for the `buildIR` option — receives the live plugin context and returns a `PageIR`. |
 
 ## Phase 3 references
 
@@ -56,4 +68,4 @@ Phase 3 dependency layering.
 | ------- | ------- |
 | `react` | `^18.2.0` |
 | `react-dom` | `^18.2.0` |
-| `@puckeditor/core` | `^0.19.0` |
+| `@puckeditor/core` | `^0.21.0` |

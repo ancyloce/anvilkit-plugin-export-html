@@ -11,8 +11,8 @@
   inline styles, asset inlining, document title, and host-provided
   asset fetching.
 - **Quality gates** — `check:publint`, `check:circular`,
-  `check:peer-deps`, `check:bundle-budget` (6 KB gzipped limit),
-  and `check:api-snapshot`.
+  `check:peer-deps`, `check:bundle-budget` (15 KB gzipped, kept in
+  sync with `.size-limit.json`), and `check:api-snapshot`.
 
 ### Notes
 
