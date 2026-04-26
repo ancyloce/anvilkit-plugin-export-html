@@ -7,14 +7,68 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 13,
+			"id": 17,
 			"name": "HtmlExportOptions",
 			"variant": "declaration",
 			"kind": 256,
 			"flags": {},
 			"children": [
 				{
-					"id": 17,
+					"id": 23,
+					"name": "buildIR",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true,
+						"isReadonly": true
+					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "Optional builder used by the export header action to obtain a\n"
+							},
+							{
+								"kind": "inline-tag",
+								"tag": "@link",
+								"text": "PageIR",
+								"target": {
+									"packageName": "@anvilkit/core",
+									"packagePath": "src/types/ir.ts",
+									"qualifiedName": "PageIR"
+								}
+							},
+							{
+								"kind": "text",
+								"text": " from the live Studio context. When provided, the\naction runs the format and broadcasts an "
+							},
+							{
+								"kind": "code",
+								"text": "`anvilkit:export:ready`"
+							},
+							{
+								"kind": "text",
+								"text": "\nevent with the resulting payload. When omitted, the action falls\nback to broadcasting an "
+							},
+							{
+								"kind": "code",
+								"text": "`anvilkit:export:request`"
+							},
+							{
+								"kind": "text",
+								"text": " event so the\nhost can perform the export itself."
+							}
+						]
+					},
+					"type": {
+						"type": "reference",
+						"target": 26,
+						"name": "IRBuilder",
+						"package": "@anvilkit/plugin-export-html"
+					}
+				},
+				{
+					"id": 21,
 					"name": "fetchAsset",
 					"variant": "declaration",
 					"kind": 1024,
@@ -24,13 +78,13 @@
 					},
 					"type": {
 						"type": "reference",
-						"target": 6,
+						"target": 10,
 						"name": "FetchAssetFn",
 						"package": "@anvilkit/plugin-export-html"
 					}
 				},
 				{
-					"id": 15,
+					"id": 19,
 					"name": "inlineAssetThresholdBytes",
 					"variant": "declaration",
 					"kind": 1024,
@@ -44,7 +98,7 @@
 					}
 				},
 				{
-					"id": 14,
+					"id": 18,
 					"name": "inlineStyles",
 					"variant": "declaration",
 					"kind": 1024,
@@ -58,7 +112,45 @@
 					}
 				},
 				{
-					"id": 16,
+					"id": 22,
+					"name": "lang",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true,
+						"isReadonly": true
+					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "BCP 47 language tag emitted on the document "
+							},
+							{
+								"kind": "code",
+								"text": "`<html lang=\"…\">`"
+							},
+							{
+								"kind": "text",
+								"text": "\nelement. Defaults to "
+							},
+							{
+								"kind": "code",
+								"text": "`\"en\"`"
+							},
+							{
+								"kind": "text",
+								"text": " when omitted."
+							}
+						]
+					},
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 20,
 					"name": "title",
 					"variant": "declaration",
 					"kind": 1024,
@@ -76,23 +168,25 @@
 				{
 					"title": "Properties",
 					"children": [
-						17,
-						15,
-						14,
-						16
+						23,
+						21,
+						19,
+						18,
+						22,
+						20
 					]
 				}
 			],
 			"indexSignatures": [
 				{
-					"id": 18,
+					"id": 24,
 					"name": "__index",
 					"variant": "signature",
 					"kind": 8192,
 					"flags": {},
 					"parameters": [
 						{
-							"id": 19,
+							"id": 25,
 							"name": "key",
 							"variant": "param",
 							"kind": 32768,
@@ -133,7 +227,7 @@
 			]
 		},
 		{
-			"id": 6,
+			"id": 10,
 			"name": "FetchAssetFn",
 			"variant": "declaration",
 			"kind": 2097152,
@@ -141,21 +235,21 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 7,
+					"id": 11,
 					"name": "__type",
 					"variant": "declaration",
 					"kind": 65536,
 					"flags": {},
 					"signatures": [
 						{
-							"id": 8,
+							"id": 12,
 							"name": "__type",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
 							"parameters": [
 								{
-									"id": 12,
+									"id": 16,
 									"name": "url",
 									"variant": "param",
 									"kind": 32768,
@@ -177,14 +271,14 @@
 									{
 										"type": "reflection",
 										"declaration": {
-											"id": 9,
+											"id": 13,
 											"name": "__type",
 											"variant": "declaration",
 											"kind": 65536,
 											"flags": {},
 											"children": [
 												{
-													"id": 10,
+													"id": 14,
 													"name": "bytes",
 													"variant": "declaration",
 													"kind": 1024,
@@ -201,7 +295,7 @@
 													}
 												},
 												{
-													"id": 11,
+													"id": 15,
 													"name": "contentType",
 													"variant": "declaration",
 													"kind": 1024,
@@ -216,8 +310,8 @@
 												{
 													"title": "Properties",
 													"children": [
-														10,
-														11
+														14,
+														15
 													]
 												}
 											]
@@ -233,12 +327,172 @@
 			}
 		},
 		{
-			"id": 5,
+			"id": 26,
+			"name": "IRBuilder",
+			"variant": "declaration",
+			"kind": 2097152,
+			"flags": {},
+			"comment": {
+				"summary": [
+					{
+						"kind": "text",
+						"text": "Build a "
+					},
+					{
+						"kind": "inline-tag",
+						"tag": "@link",
+						"text": "PageIR",
+						"target": {
+							"packageName": "@anvilkit/core",
+							"packagePath": "src/types/ir.ts",
+							"qualifiedName": "PageIR"
+						}
+					},
+					{
+						"kind": "text",
+						"text": " from the live Studio context. Supplied by the\nhost so the HTML export header action can run end-to-end without the\nplugin needing access to the host's Puck "
+					},
+					{
+						"kind": "code",
+						"text": "`Config`"
+					},
+					{
+						"kind": "text",
+						"text": ".\n\nHosts typically implement this with "
+					},
+					{
+						"kind": "code",
+						"text": "`puckDataToIR(ctx.getData(),\npuckConfig)`"
+					},
+					{
+						"kind": "text",
+						"text": " from "
+					},
+					{
+						"kind": "code",
+						"text": "`@anvilkit/ir`"
+					},
+					{
+						"kind": "text",
+						"text": "."
+					}
+				]
+			},
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 27,
+					"name": "__type",
+					"variant": "declaration",
+					"kind": 65536,
+					"flags": {},
+					"signatures": [
+						{
+							"id": 28,
+							"name": "__type",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {},
+							"parameters": [
+								{
+									"id": 29,
+									"name": "ctx",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"target": {
+											"packageName": "@anvilkit/core",
+											"packagePath": "src/types/plugin.ts",
+											"qualifiedName": "StudioPluginContext"
+										},
+										"name": "StudioPluginContext",
+										"package": "@anvilkit/core"
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": {
+											"packageName": "@anvilkit/core",
+											"packagePath": "src/types/ir.ts",
+											"qualifiedName": "PageIR"
+										},
+										"name": "PageIR",
+										"package": "@anvilkit/core"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"packageName": "typescript",
+											"packagePath": "lib/lib.es5.d.ts",
+											"qualifiedName": "Promise"
+										},
+										"typeArguments": [
+											{
+												"type": "reference",
+												"target": {
+													"packageName": "@anvilkit/core",
+													"packagePath": "src/types/ir.ts",
+													"qualifiedName": "PageIR"
+												},
+												"name": "PageIR",
+												"package": "@anvilkit/core"
+											}
+										],
+										"name": "Promise",
+										"package": "typescript"
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": 9,
 			"name": "exportHtmlHeaderAction",
 			"variant": "declaration",
 			"kind": 32,
 			"flags": {
 				"isConst": true
+			},
+			"comment": {
+				"summary": [
+					{
+						"kind": "text",
+						"text": "Default header action used when the consumer imports\n"
+					},
+					{
+						"kind": "code",
+						"text": "`exportHtmlHeaderAction`"
+					},
+					{
+						"kind": "text",
+						"text": " directly without going through\n"
+					},
+					{
+						"kind": "code",
+						"text": "`createHtmlExportPlugin`"
+					},
+					{
+						"kind": "text",
+						"text": ". This shape is preserved for backward\ncompatibility; in production it is superseded by the bound action\nreturned from "
+					},
+					{
+						"kind": "code",
+						"text": "`createExportHtmlHeaderAction(format, options)`"
+					},
+					{
+						"kind": "text",
+						"text": "."
+					}
+				]
 			},
 			"type": {
 				"type": "reference",
@@ -270,7 +524,7 @@
 				"typeArguments": [
 					{
 						"type": "reference",
-						"target": 13,
+						"target": 17,
 						"name": "HtmlExportOptions",
 						"package": "@anvilkit/plugin-export-html"
 					}
@@ -279,6 +533,128 @@
 				"package": "@anvilkit/core"
 			},
 			"defaultValue": "..."
+		},
+		{
+			"id": 5,
+			"name": "createExportHtmlHeaderAction",
+			"variant": "declaration",
+			"kind": 64,
+			"flags": {},
+			"signatures": [
+				{
+					"id": 6,
+					"name": "createExportHtmlHeaderAction",
+					"variant": "signature",
+					"kind": 4096,
+					"flags": {},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "Build a header action whose "
+							},
+							{
+								"kind": "code",
+								"text": "`onClick`"
+							},
+							{
+								"kind": "text",
+								"text": " actually runs the bound HTML\nexport format and broadcasts the result.\n\n- When "
+							},
+							{
+								"kind": "code",
+								"text": "`options.buildIR`"
+							},
+							{
+								"kind": "text",
+								"text": " is provided, the action constructs a\n  "
+							},
+							{
+								"kind": "code",
+								"text": "`PageIR`"
+							},
+							{
+								"kind": "text",
+								"text": " via that builder, runs the export format, and emits\n  "
+							},
+							{
+								"kind": "code",
+								"text": "`anvilkit:export:ready`"
+							},
+							{
+								"kind": "text",
+								"text": " with the resulting payload (host listens\n  to trigger a download).\n- Otherwise, the action emits "
+							},
+							{
+								"kind": "code",
+								"text": "`anvilkit:export:request`"
+							},
+							{
+								"kind": "text",
+								"text": " so the host\n  can perform the export end-to-end with its own Puck "
+							},
+							{
+								"kind": "code",
+								"text": "`Config`"
+							},
+							{
+								"kind": "text",
+								"text": "."
+							}
+						]
+					},
+					"parameters": [
+						{
+							"id": 7,
+							"name": "format",
+							"variant": "param",
+							"kind": 32768,
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"target": {
+									"packageName": "@anvilkit/core",
+									"packagePath": "src/types/export.ts",
+									"qualifiedName": "ExportFormatDefinition"
+								},
+								"typeArguments": [
+									{
+										"type": "reference",
+										"target": 17,
+										"name": "HtmlExportOptions",
+										"package": "@anvilkit/plugin-export-html"
+									}
+								],
+								"name": "ExportFormatDefinition",
+								"package": "@anvilkit/core"
+							}
+						},
+						{
+							"id": 8,
+							"name": "options",
+							"variant": "param",
+							"kind": 32768,
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"target": 17,
+								"name": "HtmlExportOptions",
+								"package": "@anvilkit/plugin-export-html"
+							}
+						}
+					],
+					"type": {
+						"type": "reference",
+						"target": {
+							"packageName": "@anvilkit/core",
+							"packagePath": "src/types/plugin.ts",
+							"qualifiedName": "StudioHeaderAction"
+						},
+						"name": "StudioHeaderAction",
+						"package": "@anvilkit/core"
+					}
+				}
+			]
 		},
 		{
 			"id": 1,
@@ -296,18 +672,17 @@
 					"parameters": [
 						{
 							"id": 3,
-							"name": "_opts",
+							"name": "opts",
 							"variant": "param",
 							"kind": 32768,
-							"flags": {
-								"isOptional": true
-							},
+							"flags": {},
 							"type": {
 								"type": "reference",
-								"target": 13,
+								"target": 17,
 								"name": "HtmlExportOptions",
 								"package": "@anvilkit/plugin-export-html"
-							}
+							},
+							"defaultValue": "{}"
 						}
 					],
 					"type": {
@@ -328,25 +703,27 @@
 		{
 			"title": "Interfaces",
 			"children": [
-				13
+				17
 			]
 		},
 		{
 			"title": "Type Aliases",
 			"children": [
-				6
+				10,
+				26
 			]
 		},
 		{
 			"title": "Variables",
 			"children": [
-				5,
+				9,
 				4
 			]
 		},
 		{
 			"title": "Functions",
 			"children": [
+				5,
 				1
 			]
 		}
@@ -391,11 +768,27 @@
 		},
 		{
 			"kind": "code",
-			"text": "```ts\nimport { Studio } from \"@anvilkit/core\";\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\nimport { puckConfig } from \"./puck-config\";\n\nconst htmlExport = createHtmlExportPlugin({\n  title: \"Marketing page\",\n  inlineStyles: true,\n  inlineAssetThresholdBytes: 32_768,\n});\n\n<Studio puckConfig={puckConfig} plugins={[htmlExport]} />;\n```"
+			"text": "```ts\nimport { Studio } from \"@anvilkit/core\";\nimport { puckDataToIR } from \"@anvilkit/ir\";\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\nimport { puckConfig } from \"./puck-config\";\n\nconst htmlExport = createHtmlExportPlugin({\n  title: \"Marketing page\",\n  lang: \"en\",\n  inlineAssetThresholdBytes: 32_768,\n  // Optional — when supplied, the \"Download HTML\" header action runs\n  // the export end-to-end and emits `anvilkit:export:ready` with the\n  // resulting payload. Otherwise it emits `anvilkit:export:request`\n  // for the host to handle.\n  buildIR: (ctx) => puckDataToIR(ctx.getData(), puckConfig),\n});\n\n<Studio puckConfig={puckConfig} plugins={[htmlExport]} />;\n```"
 		},
 		{
 			"kind": "text",
-			"text": "\n\n## Public API\n\n| Export | Purpose |\n| ------ | ------- |\n| "
+			"text": "\n\nOptions passed to "
+		},
+		{
+			"kind": "code",
+			"text": "`createHtmlExportPlugin()`"
+		},
+		{
+			"kind": "text",
+			"text": " are used as defaults for\nevery export run; host calls to "
+		},
+		{
+			"kind": "code",
+			"text": "`exportAs(\"html\", { … })`"
+		},
+		{
+			"kind": "text",
+			"text": " shallow-merge\non top.\n\n## Public API\n\n| Export | Purpose |\n| ------ | ------- |\n| "
 		},
 		{
 			"kind": "code",
@@ -411,7 +804,7 @@
 		},
 		{
 			"kind": "text",
-			"text": ". |\n| "
+			"text": ". Options passed here become run-time defaults. |\n| "
 		},
 		{
 			"kind": "code",
@@ -431,11 +824,35 @@
 		},
 		{
 			"kind": "code",
+			"text": "`createExportHtmlHeaderAction`"
+		},
+		{
+			"kind": "text",
+			"text": " | Build a header action bound to a configured format and options. Used internally by "
+		},
+		{
+			"kind": "code",
+			"text": "`createHtmlExportPlugin`"
+		},
+		{
+			"kind": "text",
+			"text": ". |\n| "
+		},
+		{
+			"kind": "code",
 			"text": "`exportHtmlHeaderAction`"
 		},
 		{
 			"kind": "text",
-			"text": " | Studio header action that exposes the HTML export affordance in host UIs. |\n| "
+			"text": " | Default unbound header action; emits an "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:request`"
+		},
+		{
+			"kind": "text",
+			"text": " event for hosts to handle. |\n| "
 		},
 		{
 			"kind": "code",
@@ -443,7 +860,15 @@
 		},
 		{
 			"kind": "text",
-			"text": " | Configure document title, asset inlining, inline styles, and custom asset fetchers. |\n| "
+			"text": " | Configure document title, language, asset inlining, custom asset fetchers, and an optional "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " callback. |\n| "
 		},
 		{
 			"kind": "code",
@@ -451,7 +876,31 @@
 		},
 		{
 			"kind": "text",
-			"text": " | Host-supplied async asset loader used when inlining external assets. |\n\n## Phase 3 references\n\nSee the [Phase 3 plan]("
+			"text": " | Host-supplied async asset loader used when inlining external assets. |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`IRBuilder`"
+		},
+		{
+			"kind": "text",
+			"text": " | Callback signature for the "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " option — receives the live plugin context and returns a "
+		},
+		{
+			"kind": "code",
+			"text": "`PageIR`"
+		},
+		{
+			"kind": "text",
+			"text": ". |\n\n## Phase 3 references\n\nSee the [Phase 3 plan]("
 		},
 		{
 			"kind": "relative-link",
@@ -529,7 +978,7 @@
 		},
 		{
 			"kind": "code",
-			"text": "`^0.19.0`"
+			"text": "`^0.21.0`"
 		},
 		{
 			"kind": "text",
@@ -555,7 +1004,7 @@
 		"3": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/create-html-export-plugin.ts",
-			"qualifiedName": "_opts"
+			"qualifiedName": "opts"
 		},
 		"4": {
 			"packageName": "@anvilkit/plugin-export-html",
@@ -565,67 +1014,117 @@
 		"5": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/header-action.ts",
-			"qualifiedName": "exportHtmlHeaderAction"
+			"qualifiedName": "createExportHtmlHeaderAction"
 		},
 		"6": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
-			"qualifiedName": "FetchAssetFn"
+			"packagePath": "src/header-action.ts",
+			"qualifiedName": "createExportHtmlHeaderAction"
 		},
 		"7": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
-			"qualifiedName": "__type"
+			"packagePath": "src/header-action.ts",
+			"qualifiedName": "format"
 		},
 		"8": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
-			"qualifiedName": "__type"
+			"packagePath": "src/header-action.ts",
+			"qualifiedName": "options"
 		},
 		"9": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
-			"qualifiedName": "__type"
+			"packagePath": "src/header-action.ts",
+			"qualifiedName": "exportHtmlHeaderAction"
 		},
 		"10": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "__type.bytes"
+			"qualifiedName": "FetchAssetFn"
 		},
 		"11": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "__type.contentType"
+			"qualifiedName": "__type"
 		},
 		"12": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "url"
+			"qualifiedName": "__type"
 		},
 		"13": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions"
+			"qualifiedName": "__type"
 		},
 		"14": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.inlineStyles"
+			"qualifiedName": "__type.bytes"
 		},
 		"15": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.inlineAssetThresholdBytes"
+			"qualifiedName": "__type.contentType"
 		},
 		"16": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.title"
+			"qualifiedName": "url"
 		},
 		"17": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions"
+		},
+		"18": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions.inlineStyles"
+		},
+		"19": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions.inlineAssetThresholdBytes"
+		},
+		"20": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions.title"
+		},
+		"21": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
 			"qualifiedName": "HtmlExportOptions.fetchAsset"
+		},
+		"22": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions.lang"
+		},
+		"23": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions.buildIR"
+		},
+		"26": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "IRBuilder"
+		},
+		"27": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"28": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"29": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "ctx"
 		}
 	},
 	"files": {
