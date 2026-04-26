@@ -5,10 +5,8 @@ import { defineConfig } from "@rslib/core";
  *
  * Each `.ts` under `src/` becomes an individual ESM + CJS output in
  * `dist/`, matching `@anvilkit/ir`'s layout. `@anvilkit/core`,
- * `@anvilkit/ir`, `@anvilkit/utils`, `@puckeditor/core`, `react`,
- * and `react-dom` are all left external so the package stays aligned
- * with its dependency contract while phase3-009 only ships a headless
- * scaffold.
+ * `@puckeditor/core`, `react`, and `react-dom` are all left external
+ * so the package stays aligned with its dependency contract.
  */
 export default defineConfig({
 	source: {
@@ -40,8 +38,6 @@ export default defineConfig({
 		target: "node",
 		externals: [
 			"@anvilkit/core",
-			"@anvilkit/ir",
-			"@anvilkit/utils",
 			"@puckeditor/core",
 			"react",
 			"react-dom",
