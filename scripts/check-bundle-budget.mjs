@@ -21,6 +21,10 @@ const OUT_DIR = resolve(TMP_DIR, "out");
 const PNPM_BIN = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 
 async function loadInputs() {
+	// `check-config.json` carries the byte budget enforced on CI.
+	// `.size-limit.json` MUST stay in sync — bumping one without the
+	// other produced the 6 KB / 15 KB / 20 KB drift caught in
+	// docs/code-review/plugin-export-html-code-review-20260426.md.
 	const [pkgRaw, configRaw] = await Promise.all([
 		readFile(PACKAGE_JSON, "utf8"),
 		readFile(CONFIG_JSON, "utf8"),
