@@ -14,10 +14,8 @@ export const htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {
 	extension: "html",
 	mimeType: "text/html",
 	run: async (ir, options, runCtx) => {
-		const {
-			ir: resolvedIr,
-			warnings: resolutionWarnings,
-		} = await resolveHtmlAssetUrls(ir, runCtx?.assetResolvers ?? []);
+		const { ir: resolvedIr, warnings: resolutionWarnings } =
+			await resolveHtmlAssetUrls(ir, runCtx?.assetResolvers ?? []);
 		const ctx = makeEmitContext();
 		const {
 			html,
@@ -27,23 +25,20 @@ export const htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {
 		const { inlined, warnings: assetWarnings } = await inlineAssets(
 			resolvedIr.assets,
 			{
-			thresholdBytes: options.inlineAssetThresholdBytes ?? 32_768,
-			fetchAsset: options.fetchAsset ?? defaultFetchAsset,
+				thresholdBytes: options.inlineAssetThresholdBytes ?? 32_768,
+				fetchAsset: options.fetchAsset ?? defaultFetchAsset,
 			},
 		);
 		const css = emitCss(usedClassnames, options);
 		const title = options.title ?? "Exported Page";
+		const lang = options.lang;
 		const bodyHtml = substituteAssets(html, inlined);
-		const content = wrapDocument({ title, css, bodyHtml });
+		const content = wrapDocument({ title, css, bodyHtml, lang });
 
 		return {
 			content,
 			filename: "page.html",
-			warnings: [
-				...resolutionWarnings,
-				...htmlWarnings,
-				...assetWarnings,
-			],
+			warnings: [...resolutionWarnings, ...htmlWarnings, ...assetWarnings],
 		};
 	},
 };

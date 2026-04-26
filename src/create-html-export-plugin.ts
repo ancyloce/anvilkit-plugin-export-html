@@ -1,7 +1,11 @@
-import type { StudioPlugin, StudioPluginMeta } from "@anvilkit/core/types";
+import type {
+	ExportFormatDefinition,
+	StudioPlugin,
+	StudioPluginMeta,
+} from "@anvilkit/core/types";
 
 import { htmlFormat } from "./format-definition.js";
-import { exportHtmlHeaderAction } from "./header-action.js";
+import { createExportHtmlHeaderAction } from "./header-action.js";
 import type { HtmlExportOptions } from "./types.js";
 
 const htmlExportPluginMeta: StudioPluginMeta = {
@@ -13,15 +17,25 @@ const htmlExportPluginMeta: StudioPluginMeta = {
 };
 
 export function createHtmlExportPlugin(
-	_opts?: HtmlExportOptions,
+	opts: HtmlExportOptions = {},
 ): StudioPlugin {
+	const boundFormat: ExportFormatDefinition<HtmlExportOptions> = {
+		id: htmlFormat.id,
+		label: htmlFormat.label,
+		extension: htmlFormat.extension,
+		mimeType: htmlFormat.mimeType,
+		run: (ir, runtimeOpts, runCtx) =>
+			htmlFormat.run(ir, { ...opts, ...runtimeOpts }, runCtx),
+	};
+	const boundHeaderAction = createExportHtmlHeaderAction(boundFormat, opts);
+
 	return {
 		meta: htmlExportPluginMeta,
 		register(_ctx) {
 			return {
 				meta: htmlExportPluginMeta,
-				exportFormats: [htmlFormat],
-				headerActions: [exportHtmlHeaderAction],
+				exportFormats: [boundFormat],
+				headerActions: [boundHeaderAction],
 			};
 		},
 	};

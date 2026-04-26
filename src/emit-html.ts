@@ -12,9 +12,10 @@ interface AssetLookupContext {
 export interface EmitContext extends AssetLookupContext {
 	readonly usedClassnames: Set<string>;
 	readonly warnings: ExportWarning[];
+	readonly currentNodeId?: string;
 }
 
-const LOGO_CLOUD_ITEMS = [
+const LOGO_CLOUD_DEFAULT_ITEMS = [
 	{
 		label: "React",
 		src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
@@ -89,9 +90,10 @@ export function emitHtml(
 
 function emitNode(node: PageIRNode, ctx: EmitContext): string {
 	const emitter = EMITTERS[node.type];
+	const scopedCtx: EmitContext = { ...ctx, currentNodeId: node.id };
 
 	if (emitter) {
-		return emitter(node, ctx);
+		return emitter(node, scopedCtx);
 	}
 
 	ctx.usedClassnames.add("ak-unknown");
@@ -623,6 +625,20 @@ function emitLogoClouds(node: PageIRNode, ctx: EmitContext): string {
 		"Brands love us",
 	);
 	const subtitle = getFirstString(node.props, ["subtitle", "description"]);
+	const propItems = getRecordArrayProp(node.props, "items");
+	const items: ReadonlyArray<{ label: string; src: string }> =
+		propItems.length > 0
+			? propItems
+					.map((item) => ({
+						label: getFirstString(item, ["label", "alt", "name"], "Logo"),
+						src:
+							normalizeUrl(
+								getFirstString(item, ["src", "imageUrl", "imageSrc", "url"]),
+								{ allowSafeDataImage: true },
+							) ?? "",
+					}))
+					.filter((item) => item.src !== "")
+			: LOGO_CLOUD_DEFAULT_ITEMS;
 
 	return (
 		'<section class="ak-logo-clouds">' +
@@ -634,16 +650,18 @@ function emitLogoClouds(node: PageIRNode, ctx: EmitContext): string {
 		escapeHtml(subtitle) +
 		"</p>" +
 		'<ul class="ak-logo-clouds__list" aria-label="Brand logos">' +
-		LOGO_CLOUD_ITEMS.map((item) => {
-			const image =
-				'<img src="' +
-				escapeAttr(item.src) +
-				'" alt="' +
-				escapeAttr(item.label + " logo") +
-				'" loading="lazy" decoding="async">';
+		items
+			.map((item) => {
+				const image =
+					'<img src="' +
+					escapeAttr(item.src) +
+					'" alt="' +
+					escapeAttr(item.label + " logo") +
+					'" loading="lazy" decoding="async">';
 
-			return '<li class="ak-logo-clouds__item">' + image + "</li>";
-		}).join("") +
+				return '<li class="ak-logo-clouds__item">' + image + "</li>";
+			})
+			.join("") +
 		"</ul>" +
 		"</div>" +
 		"</section>"
@@ -762,6 +780,7 @@ export function renderImage(
 			level: "warn",
 			code: "MISSING_ALT",
 			message: "Image rendered without alt text.",
+			...(ctx.currentNodeId ? { nodeId: ctx.currentNodeId } : {}),
 		});
 	}
 
@@ -794,6 +813,14 @@ interface NormalizeUrlOptions {
 	readonly allowSafeDataImage?: boolean;
 }
 
+const BLOCKED_SCHEMES = [
+	"javascript:",
+	"vbscript:",
+	"file:",
+	"blob:",
+	"filesystem:",
+] as const;
+
 export function normalizeUrl(
 	input: string,
 	options: NormalizeUrlOptions = {},
@@ -806,8 +833,10 @@ export function normalizeUrl(
 
 	const collapsed = stripUnsafeAscii(candidate).toLowerCase();
 
-	if (collapsed.startsWith("javascript:") || collapsed.startsWith("vbscript:")) {
-		return undefined;
+	for (const scheme of BLOCKED_SCHEMES) {
+		if (collapsed.startsWith(scheme)) {
+			return undefined;
+		}
 	}
 
 	if (

@@ -36,8 +36,11 @@ export function emitCss(
 	opts: HtmlExportOptions,
 ): string {
 	if (opts.inlineStyles === false) {
-		// TODO(phase4): emit the sidecar page.css file alongside this tag.
-		return '<link rel="stylesheet" href="page.css">';
+		throw new Error(
+			"@anvilkit/plugin-export-html: inlineStyles:false is not supported in this alpha. " +
+				"The export format currently returns a single document; sidecar CSS files require an " +
+				"ExportResult shape that is not yet defined. Track progress in phase4 (sidecar assets).",
+		);
 	}
 
 	const rules = Array.from(usedClassnames)
