@@ -12,6 +12,17 @@ describe('html export warnings', () => {
 		expect(ctx.warnings.some((w) => w.code === 'MISSING_ALT')).toBe(true);
 	});
 
+	it('attaches nodeId to MISSING_ALT when raised inside an emitter', () => {
+		const ctx = makeEmitContext();
+		const scoped = { ...ctx, currentNodeId: 'navbar-42' };
+		renderImage('https://example.com/logo.png', '', scoped, '');
+		// The warning is pushed onto the shared array, so it is visible
+		// on the original ctx.
+		const missingAlt = ctx.warnings.find((w) => w.code === 'MISSING_ALT');
+		expect(missingAlt).toBeDefined();
+		expect(missingAlt?.nodeId).toBe('navbar-42');
+	});
+
 	it('emits ASSET_FETCH_FAILED when asset fetching rejects', async () => {
 		const result = await htmlFormat.run(blogListFixture, {
 			fetchAsset: async () => {

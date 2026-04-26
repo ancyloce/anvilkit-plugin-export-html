@@ -26,9 +26,9 @@ describe("emitCss", () => {
 		expect(css.indexOf(".ak-hero{")).toBeLessThan(css.indexOf(".ak-navbar{"));
 	});
 
-	it("returns a stylesheet link when inlineStyles is false", () => {
-		expect(emitCss(new Set(), { inlineStyles: false })).toBe(
-			'<link rel="stylesheet" href="page.css">',
+	it("throws when inlineStyles is false (sidecar CSS not yet supported)", () => {
+		expect(() => emitCss(new Set(), { inlineStyles: false })).toThrow(
+			/inlineStyles:false is not supported/,
 		);
 	});
 

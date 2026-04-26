@@ -118,4 +118,39 @@ describe("emitHtml", () => {
 
 		expect(result.html).not.toContain("javascript:");
 	});
+
+	it("renders LogoClouds items from props when supplied", () => {
+		const result = renderNode("LogoClouds", {
+			title: "Brands",
+			items: [
+				{ label: "Acme", src: "https://cdn.example/acme.svg" },
+				{ label: "Globex", src: "https://cdn.example/globex.svg" },
+			],
+		});
+
+		expect(result.html).toContain('alt="Acme logo"');
+		expect(result.html).toContain('alt="Globex logo"');
+		expect(result.html).toContain("https://cdn.example/acme.svg");
+		// Default jsdelivr fallback is not used when items are supplied.
+		expect(result.html).not.toContain("devicons");
+	});
+
+	it("falls back to the built-in LogoClouds set when items is empty", () => {
+		const result = renderNode("LogoClouds", { title: "Brands" });
+		expect(result.html).toContain("devicons");
+	});
+
+	it("filters out LogoClouds items whose src is hostile", () => {
+		const result = renderNode("LogoClouds", {
+			title: "Brands",
+			items: [
+				{ label: "Bad", src: "javascript:alert(1)" },
+				{ label: "Good", src: "https://cdn.example/good.svg" },
+			],
+		});
+
+		expect(result.html).not.toContain("javascript:");
+		expect(result.html).toContain('alt="Good logo"');
+		expect(result.html).not.toContain('alt="Bad logo"');
+	});
 });

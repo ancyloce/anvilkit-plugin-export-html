@@ -213,6 +213,33 @@ describe("HTML exporter — URL-scheme filter (normalizeUrl)", () => {
 		expect(html).not.toMatch(/href="JaVaScRiPt:/i);
 	});
 
+	it("rejects file:// URLs as anchor hrefs", () => {
+		const html = renderHero({
+			headline: "x",
+			primaryCtaLabel: "Click",
+			primaryCtaHref: "file:///etc/passwd",
+		});
+		expect(html).not.toMatch(/href="file:/i);
+	});
+
+	it("rejects blob: URLs as anchor hrefs", () => {
+		const html = renderHero({
+			headline: "x",
+			primaryCtaLabel: "Click",
+			primaryCtaHref: "blob:https://evil.example/abcd",
+		});
+		expect(html).not.toMatch(/href="blob:/i);
+	});
+
+	it("rejects filesystem: URLs as anchor hrefs", () => {
+		const html = renderHero({
+			headline: "x",
+			primaryCtaLabel: "Click",
+			primaryCtaHref: "filesystem:https://evil.example/temporary/x",
+		});
+		expect(html).not.toMatch(/href="filesystem:/i);
+	});
+
 	it("rejects whitespace-camouflaged javascript: (tabs + newlines inside the scheme)", () => {
 		const html = renderHero({
 			headline: "x",

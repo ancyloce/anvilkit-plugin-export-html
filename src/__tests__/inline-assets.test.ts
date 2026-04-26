@@ -80,7 +80,7 @@ describe("inlineAssets", () => {
 		expect(result.warnings[0]?.message).toContain("boom");
 	});
 
-	it("skips non-image assets without fetching", async () => {
+	it("skips non-image assets without fetching, but warns", async () => {
 		const assets: PageIRAsset[] = [
 			{
 				kind: "font",
@@ -97,6 +97,37 @@ describe("inlineAssets", () => {
 
 		expect(fetchAsset).not.toHaveBeenCalled();
 		expect(result.inlined.size).toBe(0);
-		expect(result.warnings).toEqual([]);
+		expect(result.warnings).toHaveLength(1);
+		expect(result.warnings[0]).toMatchObject({
+			code: "UNINLINEABLE_ASSET_KIND",
+			level: "warn",
+		});
+		expect(result.warnings[0]?.message).toContain("font");
+	});
+
+	it("fetches multiple image assets concurrently", async () => {
+		const assets: PageIRAsset[] = [
+			{ kind: "image", id: "img1", url: "https://cdn.example/a.png" },
+			{ kind: "image", id: "img2", url: "https://cdn.example/b.png" },
+			{ kind: "image", id: "img3", url: "https://cdn.example/c.png" },
+		];
+
+		let inFlight = 0;
+		let maxInFlight = 0;
+		const fetchAsset = vi.fn(async () => {
+			inFlight += 1;
+			maxInFlight = Math.max(maxInFlight, inFlight);
+			await new Promise((resolve) => setTimeout(resolve, 5));
+			inFlight -= 1;
+			return { bytes: pngBytes, contentType: "image/png" };
+		});
+
+		const result = await inlineAssets(assets, {
+			thresholdBytes: 1024,
+			fetchAsset,
+		});
+
+		expect(result.inlined.size).toBe(3);
+		expect(maxInFlight).toBeGreaterThan(1);
 	});
 });

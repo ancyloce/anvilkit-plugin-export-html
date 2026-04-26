@@ -71,7 +71,51 @@ describe("createHtmlExportPlugin", () => {
 		expect(runtime.pluginMeta).toHaveLength(1);
 		expect(runtime.pluginMeta[0]?.id).toBe("anvilkit-plugin-export-html");
 		expect(runtime.exportFormats.has("html")).toBe(true);
-		expect(runtime.exportFormats.get("html")).toBe(htmlFormat);
+		// The registered format is a bound wrapper around htmlFormat — same id,
+		// label, extension, mimeType — but a different object than the raw export.
+		const registered = runtime.exportFormats.get("html");
+		expect(registered).toBeDefined();
+		expect(registered?.id).toBe(htmlFormat.id);
+		expect(registered?.label).toBe(htmlFormat.label);
+		expect(registered?.extension).toBe(htmlFormat.extension);
+		expect(registered?.mimeType).toBe(htmlFormat.mimeType);
+	});
+
+	it("threads constructor options into the registered format as defaults", async () => {
+		const ctx = makeCtx();
+		const runtime = await compilePlugins(
+			[createHtmlExportPlugin({ title: "Marketing page", lang: "fr" })],
+			ctx,
+		);
+		const format = runtime.exportFormats.get("html");
+
+		if (!format) {
+			throw new Error("Expected html format to be registered");
+		}
+
+		const result = await format.run(makeHeroIr(), {});
+
+		expect(result.content).toContain("<title>Marketing page</title>");
+		expect(result.content).toContain('<html lang="fr">');
+	});
+
+	it("merges run-time options on top of constructor defaults", async () => {
+		const ctx = makeCtx();
+		const runtime = await compilePlugins(
+			[createHtmlExportPlugin({ title: "Default", lang: "de" })],
+			ctx,
+		);
+		const format = runtime.exportFormats.get("html");
+
+		if (!format) {
+			throw new Error("Expected html format to be registered");
+		}
+
+		const result = await format.run(makeHeroIr(), { title: "Override" });
+
+		expect(result.content).toContain("<title>Override</title>");
+		// `lang` was not overridden, so the constructor default wins.
+		expect(result.content).toContain('<html lang="de">');
 	});
 
 	it("returns the stub html export payload from htmlFormat.run()", async () => {
@@ -142,5 +186,29 @@ describe("createHtmlExportPlugin", () => {
 				group: "secondary",
 			}),
 		);
+	});
+
+	it("defaults to lang=en when no lang option is supplied", async () => {
+		const result = await htmlFormat.run(makeHeroIr(), {});
+		expect(result.content).toContain('<html lang="en">');
+	});
+
+	it("emits the supplied lang on the document element", async () => {
+		const result = await htmlFormat.run(makeHeroIr(), { lang: "ja" });
+		expect(result.content).toContain('<html lang="ja">');
+	});
+
+	it("escapes the lang attribute against attribute breakouts", async () => {
+		const result = await htmlFormat.run(makeHeroIr(), {
+			lang: 'en"><script>alert(1)</script>',
+		});
+		expect(result.content).not.toMatch(/<script[\s>]/i);
+		expect(result.content).toContain("&quot;");
+	});
+
+	it("throws when inlineStyles:false is requested (alpha not-yet-implemented)", async () => {
+		await expect(
+			htmlFormat.run(makeHeroIr(), { inlineStyles: false }),
+		).rejects.toThrow(/inlineStyles:false is not supported/);
 	});
 });
