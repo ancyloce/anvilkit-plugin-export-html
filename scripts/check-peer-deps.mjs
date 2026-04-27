@@ -8,14 +8,37 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const PACKAGE_ROOT = resolve(__dirname, "..");
 const PACKAGE_JSON = resolve(PACKAGE_ROOT, "package.json");
+const CORE_PACKAGE_JSON = resolve(
+	PACKAGE_ROOT,
+	"..",
+	"..",
+	"core",
+	"package.json",
+);
 const REQUIRED_PEERS = ["react", "react-dom", "@puckeditor/core"];
+// Plugin React peer ranges must include every range core supports so a
+// host running on React 19 (which core supports) does not see an
+// avoidable install warning when this plugin is installed alongside core.
+const CORE_MIRRORED_PEERS = ["react", "react-dom"];
+
+function normalizeRange(range) {
+	if (typeof range !== "string") {
+		return [];
+	}
+	return range
+		.split("||")
+		.map((part) => part.trim())
+		.filter((part) => part.length > 0);
+}
 
 async function main() {
 	const pkg = JSON.parse(await readFile(PACKAGE_JSON, "utf8"));
+	const corePkg = JSON.parse(await readFile(CORE_PACKAGE_JSON, "utf8"));
 	const dependencies = pkg.dependencies ?? {};
 	const devDependencies = pkg.devDependencies ?? {};
 	const peerDependencies = pkg.peerDependencies ?? {};
 	const peerDependenciesMeta = pkg.peerDependenciesMeta ?? {};
+	const corePeerDependencies = corePkg.peerDependencies ?? {};
 
 	const missingRequiredPeers = REQUIRED_PEERS.filter(
 		(name) => !(name in peerDependencies),
@@ -29,14 +52,45 @@ async function main() {
 	});
 	const leakedToDependencies = REQUIRED_PEERS.filter((name) => name in dependencies);
 
+	const narrowerThanCore = [];
+	for (const name of CORE_MIRRORED_PEERS) {
+		const pluginRange = peerDependencies[name];
+		const coreRange = corePeerDependencies[name];
+		if (typeof pluginRange !== "string" || typeof coreRange !== "string") {
+			continue;
+		}
+		const pluginParts = normalizeRange(pluginRange);
+		const coreParts = normalizeRange(coreRange);
+		// Cheap structural comparison: every disjunct in the core range
+		// must show up in the plugin range, otherwise the plugin is
+		// narrower. We compare on the leading major specifier of each
+		// disjunct (e.g. "^18", "^19") rather than parsing semver, so
+		// the check tolerates differences in the minor/patch tail
+		// (`^18` vs `^18.2.0`) but still flags missing majors.
+		const majorOf = (part) => {
+			const match = /^[\^~]?(\d+)/.exec(part);
+			return match ? match[1] : null;
+		};
+		const pluginMajors = new Set(
+			pluginParts.map(majorOf).filter((value) => value !== null),
+		);
+		const missingMajors = coreParts
+			.map(majorOf)
+			.filter((value) => value !== null && !pluginMajors.has(value));
+		if (missingMajors.length > 0) {
+			narrowerThanCore.push({ name, pluginRange, coreRange, missingMajors });
+		}
+	}
+
 	if (
 		missingRequiredPeers.length === 0 &&
 		missingFromDevDependencies.length === 0 &&
 		missingPeerMeta.length === 0 &&
-		leakedToDependencies.length === 0
+		leakedToDependencies.length === 0 &&
+		narrowerThanCore.length === 0
 	) {
 		console.log(
-			"check-peer-deps: OK — peer deps are mirrored in devDependencies and absent from dependencies.",
+			"check-peer-deps: OK — peer deps are mirrored in devDependencies, absent from dependencies, and not narrower than @anvilkit/core.",
 		);
 		return;
 	}
@@ -78,6 +132,21 @@ async function main() {
 		);
 		console.error(
 			'  Remove required peers from "dependencies" so consumers do not install duplicate runtime copies.',
+		);
+		console.error("");
+	}
+
+	if (narrowerThanCore.length > 0) {
+		console.error(
+			"  Plugin peer ranges narrower than @anvilkit/core — install warnings under React 19:",
+		);
+		for (const entry of narrowerThanCore) {
+			console.error(
+				`    ${entry.name}: plugin "${entry.pluginRange}" vs core "${entry.coreRange}" (missing majors: ${entry.missingMajors.join(", ")})`,
+			);
+		}
+		console.error(
+			"  Broaden the plugin range to cover the same majors core declares.",
 		);
 		console.error("");
 	}
