@@ -1,6 +1,6 @@
 import type { PageIRAsset } from "@anvilkit/core/types";
-import { describe, expect, it, vi } from "vitest";
-import { inlineAssets } from "../inline-assets.js";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { defaultFetchAsset, inlineAssets } from "../inline-assets.js";
 import { encodeBase64 } from "../internal/base64.js";
 
 const pngBytes = new Uint8Array([
@@ -105,6 +105,47 @@ describe("inlineAssets", () => {
 		expect(result.warnings[0]?.message).toContain("font");
 	});
 
+	it("only fetches assets whose ids appear in emittedAssetIds", async () => {
+		const assets: PageIRAsset[] = [
+			{ kind: "image", id: "used", url: "https://cdn.example/a.png" },
+			{ kind: "image", id: "unused", url: "https://cdn.example/b.png" },
+		];
+		const fetchAsset = vi.fn(async () => ({
+			bytes: pngBytes,
+			contentType: "image/png",
+		}));
+
+		const result = await inlineAssets(assets, {
+			thresholdBytes: 1024,
+			fetchAsset,
+			emittedAssetIds: new Set(["used"]),
+		});
+
+		expect(fetchAsset).toHaveBeenCalledTimes(1);
+		expect(fetchAsset).toHaveBeenCalledWith(
+			"https://cdn.example/a.png",
+			expect.objectContaining({ maxBytes: 1024 }),
+		);
+		expect(result.inlined.has("used")).toBe(true);
+		expect(result.inlined.has("unused")).toBe(false);
+	});
+
+	it("inlines no assets when emittedAssetIds is empty", async () => {
+		const assets: PageIRAsset[] = [
+			{ kind: "image", id: "img1", url: "https://cdn.example/a.png" },
+		];
+		const fetchAsset = vi.fn();
+
+		const result = await inlineAssets(assets, {
+			thresholdBytes: 1024,
+			fetchAsset,
+			emittedAssetIds: new Set(),
+		});
+
+		expect(fetchAsset).not.toHaveBeenCalled();
+		expect(result.inlined.size).toBe(0);
+	});
+
 	it("fetches multiple image assets concurrently", async () => {
 		const assets: PageIRAsset[] = [
 			{ kind: "image", id: "img1", url: "https://cdn.example/a.png" },
@@ -129,5 +170,77 @@ describe("inlineAssets", () => {
 
 		expect(result.inlined.size).toBe(3);
 		expect(maxInFlight).toBeGreaterThan(1);
+	});
+
+	it("blocks the default fetcher from non-http(s) schemes", async () => {
+		const assets: PageIRAsset[] = [
+			{ kind: "image", id: "img1", url: "file:///etc/passwd" },
+		];
+
+		const result = await inlineAssets(assets, {
+			thresholdBytes: 1024,
+			fetchAsset: defaultFetchAsset,
+			emittedAssetIds: new Set(["img1"]),
+		});
+
+		expect(result.inlined.size).toBe(0);
+		expect(result.warnings).toHaveLength(1);
+		expect(result.warnings[0]).toMatchObject({
+			code: "ASSET_FETCH_BLOCKED",
+			level: "warn",
+		});
+	});
+});
+
+describe("defaultFetchAsset", () => {
+	const realFetch = globalThis.fetch;
+
+	afterEach(() => {
+		globalThis.fetch = realFetch;
+	});
+
+	it("rejects when Content-Length advertises a payload over the cap", async () => {
+		globalThis.fetch = vi.fn(async () =>
+			new Response(new Uint8Array(8), {
+				status: 200,
+				headers: {
+					"content-type": "image/png",
+					"content-length": "1048576",
+				},
+			}),
+		) as unknown as typeof fetch;
+
+		await expect(
+			defaultFetchAsset("https://cdn.example/big.png", { maxBytes: 1024 }),
+		).rejects.toThrow(/Content-Length/);
+	});
+
+	it("rejects when streamed body exceeds the cap mid-flight", async () => {
+		const bigChunk = new Uint8Array(2048);
+		const stream = new ReadableStream<Uint8Array>({
+			start(controller) {
+				controller.enqueue(bigChunk);
+				controller.close();
+			},
+		});
+		globalThis.fetch = vi.fn(
+			async () =>
+				new Response(stream, {
+					status: 200,
+					headers: { "content-type": "image/png" },
+				}),
+		) as unknown as typeof fetch;
+
+		await expect(
+			defaultFetchAsset("https://cdn.example/streamed.png", {
+				maxBytes: 1024,
+			}),
+		).rejects.toThrow(/streamed body/);
+	});
+
+	it("refuses non-http(s) URLs outright", async () => {
+		await expect(
+			defaultFetchAsset("file:///etc/passwd"),
+		).rejects.toThrow(/refused to fetch/);
 	});
 });

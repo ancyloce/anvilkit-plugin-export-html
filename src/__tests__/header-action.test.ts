@@ -88,6 +88,62 @@ describe("export header action wiring", () => {
 		expect(payload?.content).toContain("<title>Page</title>");
 	});
 
+	it("forwards configured assetResolvers when running with buildIR", async () => {
+		const ir: PageIR = {
+			version: "1",
+			root: {
+				id: "root",
+				type: "__root__",
+				props: {},
+				children: [
+					{
+						id: "blog-1",
+						type: "BlogList",
+						props: {
+							posts: [
+								{
+									title: "Launch",
+									description: "Resolved via plugin assetResolvers.",
+									imageSrc: "asset://logo",
+									imageAlt: "Logo",
+								},
+							],
+						},
+					},
+				],
+			},
+			assets: [{ id: "logo", kind: "image", url: "asset://logo" }],
+			metadata: {},
+		};
+		const resolver = vi.fn((url: string) =>
+			url === "asset://logo"
+				? { url: "https://cdn.example/logo.png" }
+				: null,
+		);
+		const plugin = createHtmlExportPlugin({
+			buildIR: () => ir,
+			assetResolvers: [resolver],
+			fetchAsset: vi.fn().mockRejectedValue(new Error("skip inline")),
+		});
+		const ctx = makeCtx();
+		const registration = await plugin.register(ctx);
+		const action = registration.headerActions?.[0];
+
+		if (!action) {
+			throw new Error("Expected a header action");
+		}
+
+		await action.onClick(ctx);
+
+		expect(resolver).toHaveBeenCalledWith("asset://logo");
+		const emit = ctx.emit as ReturnType<typeof vi.fn>;
+		const payload = emit.mock.calls.find(
+			(call) => call[0] === "anvilkit:export:ready",
+		)?.[1] as { content: string } | undefined;
+		expect(payload?.content).toContain("https://cdn.example/logo.png");
+		expect(payload?.content).not.toContain("asset://logo");
+	});
+
 	it("logs and re-throws when buildIR throws", async () => {
 		const failure = new Error("boom");
 		const plugin = createHtmlExportPlugin({

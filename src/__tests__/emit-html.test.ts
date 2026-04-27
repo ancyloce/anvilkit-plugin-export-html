@@ -153,4 +153,81 @@ describe("emitHtml", () => {
 		expect(result.html).toContain('alt="Good logo"');
 		expect(result.html).not.toContain('alt="Bad logo"');
 	});
+
+	it("warns UNSUPPORTED_CHILDREN when a known emitter has nested children", () => {
+		const result = emitHtml(
+			{
+				version: "1",
+				root: {
+					id: "root",
+					type: "__root__",
+					props: {},
+					children: [
+						{
+							id: "hero-1",
+							type: "Hero",
+							props: { headline: "Hi" },
+							children: [
+								{ id: "nested-1", type: "Hero", props: { headline: "Nested" } },
+							],
+						},
+					],
+				},
+				assets: [],
+				metadata: {},
+			},
+			{},
+			makeEmitContext(),
+		);
+
+		const dropped = result.warnings.find(
+			(w) => w.code === "UNSUPPORTED_CHILDREN",
+		);
+		expect(dropped).toBeDefined();
+		expect(dropped?.nodeId).toBe("hero-1");
+	});
+
+	it("populates emittedAssetIds when renderImage matches an asset entry", () => {
+		const ir: PageIR = {
+			version: "1",
+			root: {
+				id: "root",
+				type: "__root__",
+				props: {},
+				children: [
+					{
+						id: "logo-1",
+						type: "LogoClouds",
+						props: {
+							title: "Brands",
+							items: [
+								{ label: "Acme", src: "https://cdn.example/acme.svg" },
+							],
+						},
+					},
+				],
+			},
+			assets: [
+				{
+					id: "acme-asset",
+					kind: "image",
+					url: "https://cdn.example/acme.svg",
+				},
+				{
+					id: "unused-asset",
+					kind: "image",
+					url: "https://cdn.example/unused.svg",
+				},
+			],
+			metadata: {},
+		};
+
+		const result = emitHtml(ir, {}, makeEmitContext());
+
+		expect(result.emittedAssetIds.has("acme-asset")).toBe(true);
+		expect(result.emittedAssetIds.has("unused-asset")).toBe(false);
+		// LogoClouds now routes through renderImage so the marker
+		// attribute appears in the output.
+		expect(result.html).toContain('data-asset-id="acme-asset"');
+	});
 });
