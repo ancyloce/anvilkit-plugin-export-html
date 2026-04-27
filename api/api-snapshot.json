@@ -7,14 +7,144 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 17,
+			"id": 18,
+			"name": "FetchAssetOptions",
+			"variant": "declaration",
+			"kind": 256,
+			"flags": {},
+			"comment": {
+				"summary": [
+					{
+						"kind": "text",
+						"text": "Optional hints the format passes to a custom fetcher.\n\nThe default fetcher uses these to enforce byte caps before fully\ndownloading a payload (Content-Length pre-check + streaming body).\nCustom fetchers are free to ignore the bag entirely; the field\nexists so hosts that wrap "
+					},
+					{
+						"kind": "code",
+						"text": "`defaultFetchAsset`"
+					},
+					{
+						"kind": "text",
+						"text": " can honor the same\nlimits the format would have applied."
+					}
+				]
+			},
+			"children": [
+				{
+					"id": 19,
+					"name": "maxBytes",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true,
+						"isReadonly": true
+					},
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"children": [
+						19
+					]
+				}
+			]
+		},
+		{
+			"id": 20,
 			"name": "HtmlExportOptions",
 			"variant": "declaration",
 			"kind": 256,
 			"flags": {},
 			"children": [
 				{
-					"id": 23,
+					"id": 27,
+					"name": "assetResolvers",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true,
+						"isReadonly": true
+					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "Optional asset resolvers consulted before rendering. Used by the\nheader action's "
+							},
+							{
+								"kind": "code",
+								"text": "`buildIR`"
+							},
+							{
+								"kind": "text",
+								"text": " path so "
+							},
+							{
+								"kind": "code",
+								"text": "`asset://`"
+							},
+							{
+								"kind": "text",
+								"text": " references resolve\nthe same way they would when the host calls "
+							},
+							{
+								"kind": "code",
+								"text": "`format.run()`"
+							},
+							{
+								"kind": "text",
+								"text": "\ndirectly with "
+							},
+							{
+								"kind": "code",
+								"text": "`runtime.assetResolvers`"
+							},
+							{
+								"kind": "text",
+								"text": ". When the host's export\npipeline already supplies resolvers via the third "
+							},
+							{
+								"kind": "code",
+								"text": "`runCtx`"
+							},
+							{
+								"kind": "text",
+								"text": "\nargument to "
+							},
+							{
+								"kind": "code",
+								"text": "`format.run()`"
+							},
+							{
+								"kind": "text",
+								"text": ", those are merged with this list."
+							}
+						]
+					},
+					"type": {
+						"type": "typeOperator",
+						"operator": "readonly",
+						"target": {
+							"type": "array",
+							"elementType": {
+								"type": "reference",
+								"target": {
+									"packageName": "@anvilkit/core",
+									"packagePath": "src/types/asset-resolver.ts",
+									"qualifiedName": "IRAssetResolver"
+								},
+								"name": "IRAssetResolver",
+								"package": "@anvilkit/core"
+							}
+						}
+					}
+				},
+				{
+					"id": 26,
 					"name": "buildIR",
 					"variant": "declaration",
 					"kind": 1024,
@@ -62,13 +192,13 @@
 					},
 					"type": {
 						"type": "reference",
-						"target": 26,
+						"target": 30,
 						"name": "IRBuilder",
 						"package": "@anvilkit/plugin-export-html"
 					}
 				},
 				{
-					"id": 21,
+					"id": 24,
 					"name": "fetchAsset",
 					"variant": "declaration",
 					"kind": 1024,
@@ -84,7 +214,7 @@
 					}
 				},
 				{
-					"id": 19,
+					"id": 22,
 					"name": "inlineAssetThresholdBytes",
 					"variant": "declaration",
 					"kind": 1024,
@@ -98,7 +228,7 @@
 					}
 				},
 				{
-					"id": 18,
+					"id": 21,
 					"name": "inlineStyles",
 					"variant": "declaration",
 					"kind": 1024,
@@ -112,7 +242,7 @@
 					}
 				},
 				{
-					"id": 22,
+					"id": 25,
 					"name": "lang",
 					"variant": "declaration",
 					"kind": 1024,
@@ -150,7 +280,7 @@
 					}
 				},
 				{
-					"id": 20,
+					"id": 23,
 					"name": "title",
 					"variant": "declaration",
 					"kind": 1024,
@@ -168,25 +298,26 @@
 				{
 					"title": "Properties",
 					"children": [
-						23,
-						21,
-						19,
-						18,
+						27,
+						26,
+						24,
 						22,
-						20
+						21,
+						25,
+						23
 					]
 				}
 			],
 			"indexSignatures": [
 				{
-					"id": 24,
+					"id": 28,
 					"name": "__index",
 					"variant": "signature",
 					"kind": 8192,
 					"flags": {},
 					"parameters": [
 						{
-							"id": 25,
+							"id": 29,
 							"name": "key",
 							"variant": "param",
 							"kind": 32768,
@@ -258,6 +389,21 @@
 										"type": "intrinsic",
 										"name": "string"
 									}
+								},
+								{
+									"id": 17,
+									"name": "opts",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": 18,
+										"name": "FetchAssetOptions",
+										"package": "@anvilkit/plugin-export-html"
+									}
 								}
 							],
 							"type": {
@@ -327,7 +473,7 @@
 			}
 		},
 		{
-			"id": 26,
+			"id": 30,
 			"name": "IRBuilder",
 			"variant": "declaration",
 			"kind": 2097152,
@@ -381,21 +527,21 @@
 			"type": {
 				"type": "reflection",
 				"declaration": {
-					"id": 27,
+					"id": 31,
 					"name": "__type",
 					"variant": "declaration",
 					"kind": 65536,
 					"flags": {},
 					"signatures": [
 						{
-							"id": 28,
+							"id": 32,
 							"name": "__type",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
 							"parameters": [
 								{
-									"id": 29,
+									"id": 33,
 									"name": "ctx",
 									"variant": "param",
 									"kind": 32768,
@@ -524,7 +670,7 @@
 				"typeArguments": [
 					{
 						"type": "reference",
-						"target": 17,
+						"target": 20,
 						"name": "HtmlExportOptions",
 						"package": "@anvilkit/plugin-export-html"
 					}
@@ -575,7 +721,15 @@
 							},
 							{
 								"kind": "text",
-								"text": " via that builder, runs the export format, and emits\n  "
+								"text": " via that builder, runs the export format with any\n  "
+							},
+							{
+								"kind": "code",
+								"text": "`assetResolvers`"
+							},
+							{
+								"kind": "text",
+								"text": " configured on the plugin, and emits\n  "
 							},
 							{
 								"kind": "code",
@@ -596,6 +750,46 @@
 							{
 								"kind": "code",
 								"text": "`Config`"
+							},
+							{
+								"kind": "text",
+								"text": " and\n  the runtime's collected asset resolvers. Note: the base\n  "
+							},
+							{
+								"kind": "code",
+								"text": "`<Studio>`"
+							},
+							{
+								"kind": "text",
+								"text": " "
+							},
+							{
+								"kind": "code",
+								"text": "`emit`"
+							},
+							{
+								"kind": "text",
+								"text": " implementation is a no-op until the plugin\n  event bus ships, so consumers without "
+							},
+							{
+								"kind": "code",
+								"text": "`buildIR`"
+							},
+							{
+								"kind": "text",
+								"text": " must wire their\n  own listener (e.g. via a host-supplied "
+							},
+							{
+								"kind": "code",
+								"text": "`emit`"
+							},
+							{
+								"kind": "text",
+								"text": " adapter) to receive\n  "
+							},
+							{
+								"kind": "code",
+								"text": "`anvilkit:export:request`"
 							},
 							{
 								"kind": "text",
@@ -620,7 +814,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"target": 17,
+										"target": 20,
 										"name": "HtmlExportOptions",
 										"package": "@anvilkit/plugin-export-html"
 									}
@@ -637,7 +831,7 @@
 							"flags": {},
 							"type": {
 								"type": "reference",
-								"target": 17,
+								"target": 20,
 								"name": "HtmlExportOptions",
 								"package": "@anvilkit/plugin-export-html"
 							}
@@ -678,7 +872,7 @@
 							"flags": {},
 							"type": {
 								"type": "reference",
-								"target": 17,
+								"target": 20,
 								"name": "HtmlExportOptions",
 								"package": "@anvilkit/plugin-export-html"
 							},
@@ -703,14 +897,15 @@
 		{
 			"title": "Interfaces",
 			"children": [
-				17
+				18,
+				20
 			]
 		},
 		{
 			"title": "Type Aliases",
 			"children": [
 				10,
-				26
+				30
 			]
 		},
 		{
@@ -1074,54 +1269,74 @@
 		"17": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions"
+			"qualifiedName": "opts"
 		},
 		"18": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.inlineStyles"
+			"qualifiedName": "FetchAssetOptions"
 		},
 		"19": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.inlineAssetThresholdBytes"
+			"qualifiedName": "FetchAssetOptions.maxBytes"
 		},
 		"20": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.title"
+			"qualifiedName": "HtmlExportOptions"
 		},
 		"21": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.fetchAsset"
+			"qualifiedName": "HtmlExportOptions.inlineStyles"
 		},
 		"22": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.lang"
+			"qualifiedName": "HtmlExportOptions.inlineAssetThresholdBytes"
 		},
 		"23": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "HtmlExportOptions.buildIR"
+			"qualifiedName": "HtmlExportOptions.title"
+		},
+		"24": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions.fetchAsset"
+		},
+		"25": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "HtmlExportOptions.lang"
 		},
 		"26": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "IRBuilder"
+			"qualifiedName": "HtmlExportOptions.buildIR"
 		},
 		"27": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
-			"qualifiedName": "__type"
+			"qualifiedName": "HtmlExportOptions.assetResolvers"
 		},
-		"28": {
+		"30": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "IRBuilder"
+		},
+		"31": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
 			"qualifiedName": "__type"
 		},
-		"29": {
+		"32": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"33": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/types.ts",
 			"qualifiedName": "ctx"
