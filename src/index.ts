@@ -6,6 +6,7 @@ export {
 } from "./header-action.js";
 export type {
 	FetchAssetFn,
+	FetchAssetOptions,
 	HtmlExportOptions,
 	IRBuilder,
 } from "./types.js";

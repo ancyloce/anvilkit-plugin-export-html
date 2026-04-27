@@ -1,4 +1,7 @@
-import type { ExportFormatDefinition } from "@anvilkit/core/types";
+import type {
+	ExportFormatDefinition,
+	IRAssetResolver,
+} from "@anvilkit/core/types";
 
 import { emitCss } from "./emit-css.js";
 import { emitHtml, makeEmitContext } from "./emit-html.js";
@@ -14,26 +17,34 @@ export const htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {
 	extension: "html",
 	mimeType: "text/html",
 	run: async (ir, options, runCtx) => {
+		const mergedResolvers: readonly IRAssetResolver[] = [
+			...(runCtx?.assetResolvers ?? []),
+			...(options.assetResolvers ?? []),
+		];
 		const { ir: resolvedIr, warnings: resolutionWarnings } =
-			await resolveHtmlAssetUrls(ir, runCtx?.assetResolvers ?? []);
+			await resolveHtmlAssetUrls(ir, mergedResolvers);
 		const ctx = makeEmitContext();
 		const {
 			html,
 			usedClassnames,
 			warnings: htmlWarnings,
+			emittedAssetIds,
 		} = emitHtml(resolvedIr, options, ctx);
 		const { inlined, warnings: assetWarnings } = await inlineAssets(
 			resolvedIr.assets,
 			{
 				thresholdBytes: options.inlineAssetThresholdBytes ?? 32_768,
 				fetchAsset: options.fetchAsset ?? defaultFetchAsset,
+				emittedAssetIds,
 			},
 		);
 		const css = emitCss(usedClassnames, options);
-		const title = options.title ?? "Exported Page";
+		const title =
+			options.title ?? resolvedIr.metadata.title ?? "Exported Page";
+		const description = resolvedIr.metadata.description;
 		const lang = options.lang;
 		const bodyHtml = substituteAssets(html, inlined);
-		const content = wrapDocument({ title, css, bodyHtml, lang });
+		const content = wrapDocument({ title, css, bodyHtml, lang, description });
 
 		return {
 			content,

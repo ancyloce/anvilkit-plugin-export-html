@@ -19,11 +19,17 @@ const DEFAULT_HEADER_ACTION: Omit<StudioHeaderAction, "onClick"> = {
  * export format and broadcasts the result.
  *
  * - When `options.buildIR` is provided, the action constructs a
- *   `PageIR` via that builder, runs the export format, and emits
+ *   `PageIR` via that builder, runs the export format with any
+ *   `assetResolvers` configured on the plugin, and emits
  *   `anvilkit:export:ready` with the resulting payload (host listens
  *   to trigger a download).
  * - Otherwise, the action emits `anvilkit:export:request` so the host
- *   can perform the export end-to-end with its own Puck `Config`.
+ *   can perform the export end-to-end with its own Puck `Config` and
+ *   the runtime's collected asset resolvers. Note: the base
+ *   `<Studio>` `emit` implementation is a no-op until the plugin
+ *   event bus ships, so consumers without `buildIR` must wire their
+ *   own listener (e.g. via a host-supplied `emit` adapter) to receive
+ *   `anvilkit:export:request`.
  */
 export function createExportHtmlHeaderAction(
 	format: ExportFormatDefinition<HtmlExportOptions>,
@@ -50,7 +56,9 @@ export function createExportHtmlHeaderAction(
 
 			try {
 				const ir = await buildIR(ctx);
-				const result = await format.run(ir, options);
+				const result = await format.run(ir, options, {
+					assetResolvers: options.assetResolvers,
+				});
 				ctx.emit("anvilkit:export:ready", {
 					formatId: format.id,
 					content: result.content,

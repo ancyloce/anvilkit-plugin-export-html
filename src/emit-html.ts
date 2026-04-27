@@ -13,6 +13,13 @@ export interface EmitContext extends AssetLookupContext {
 	readonly usedClassnames: Set<string>;
 	readonly warnings: ExportWarning[];
 	readonly currentNodeId?: string;
+	/**
+	 * Asset ids that have been emitted into the markup as
+	 * `data-asset-id` markers. Populated by {@link renderImage} so the
+	 * format can scope inlining to only those ids that actually appear
+	 * in the output.
+	 */
+	readonly emittedAssetIds?: Set<string>;
 }
 
 const LOGO_CLOUD_DEFAULT_ITEMS = [
@@ -62,20 +69,31 @@ const EMITTERS: Readonly<
 };
 
 export function makeEmitContext(): EmitContext {
-	return { usedClassnames: new Set(), warnings: [] };
+	return {
+		usedClassnames: new Set(),
+		warnings: [],
+		emittedAssetIds: new Set(),
+	};
 }
 
 export function emitHtml(
 	ir: PageIR,
 	opts: HtmlExportOptions,
 	ctx: EmitContext,
-): { html: string; usedClassnames: Set<string>; warnings: ExportWarning[] } {
+): {
+	html: string;
+	usedClassnames: Set<string>;
+	warnings: ExportWarning[];
+	emittedAssetIds: Set<string>;
+} {
 	void opts;
 
+	const emittedAssetIds = ctx.emittedAssetIds ?? new Set<string>();
 	const runtimeCtx: EmitContext = {
 		usedClassnames: ctx.usedClassnames,
 		warnings: ctx.warnings,
 		assetIdsByUrl: createAssetIdsByUrl(ir),
+		emittedAssetIds,
 	};
 
 	const rootChildren = ir.root.children ?? [];
@@ -85,6 +103,7 @@ export function emitHtml(
 		html,
 		usedClassnames: ctx.usedClassnames,
 		warnings: ctx.warnings,
+		emittedAssetIds,
 	};
 }
 
@@ -93,6 +112,25 @@ function emitNode(node: PageIRNode, ctx: EmitContext): string {
 	const scopedCtx: EmitContext = { ...ctx, currentNodeId: node.id };
 
 	if (emitter) {
+		// None of the registered emitters render `node.children` today
+		// (the IR contract reserves `children` for slot/zone content but
+		// no current emitter has a slot field). Warn loudly when a
+		// supported component carries children that will be dropped so
+		// the loss is visible instead of silent.
+		if (node.children && node.children.length > 0) {
+			ctx.warnings.push({
+				level: "warn",
+				code: "UNSUPPORTED_CHILDREN",
+				message:
+					'Component "' +
+					node.type +
+					'" has nested children that the HTML exporter does not render. ' +
+					String(node.children.length) +
+					" child node(s) were omitted from the output.",
+				nodeId: node.id,
+			});
+		}
+
 		return emitter(node, scopedCtx);
 	}
 
@@ -652,14 +690,16 @@ function emitLogoClouds(node: PageIRNode, ctx: EmitContext): string {
 		'<ul class="ak-logo-clouds__list" aria-label="Brand logos">' +
 		items
 			.map((item) => {
-				const image =
-					'<img src="' +
-					escapeAttr(item.src) +
-					'" alt="' +
-					escapeAttr(item.label + " logo") +
-					'" loading="lazy" decoding="async">';
+				const image = renderImage(
+					item.src,
+					item.label + " logo",
+					ctx,
+					' loading="lazy" decoding="async"',
+				);
 
-				return '<li class="ak-logo-clouds__item">' + image + "</li>";
+				return image
+					? '<li class="ak-logo-clouds__item">' + image + "</li>"
+					: "";
 			})
 			.join("") +
 		"</ul>" +
@@ -785,6 +825,7 @@ export function renderImage(
 	}
 
 	if (assetId) {
+		ctx.emittedAssetIds?.add(assetId);
 		return (
 			'<img data-asset-src="' +
 			escapeAttr(safeUrl) +

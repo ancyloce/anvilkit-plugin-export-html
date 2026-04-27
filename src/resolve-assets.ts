@@ -218,6 +218,12 @@ function cloneNode(
 			rewrittenUrls,
 			blockedUrls,
 		) as Readonly<Record<string, unknown>>,
+		// Preserve `slot` and `slotKind` so a rewritten/blocked clone
+		// keeps the same parent-slot relationship as the input. The HTML
+		// emitters do not currently use these fields, but the helper
+		// returns a `PageIR` and must not silently lose shape.
+		...(node.slot !== undefined ? { slot: node.slot } : {}),
+		...(node.slotKind !== undefined ? { slotKind: node.slotKind } : {}),
 		...(node.children
 			? {
 					children: node.children.map((child) =>
@@ -248,7 +254,11 @@ function cloneAsset(
 		id: asset.id,
 		kind: asset.kind,
 		url: rewrittenUrls.get(asset.url) ?? asset.url,
-		...(asset.meta ? { meta: asset.meta } : {}),
+		// Clone `meta` instead of reusing the caller's reference. The
+		// resolver `deepFreeze`s the cloned IR; sharing the same `meta`
+		// object would freeze the caller's input metadata as a side
+		// effect of running the export.
+		...(asset.meta ? { meta: { ...asset.meta } } : {}),
 	};
 }
 

@@ -7,6 +7,7 @@ export function wrapDocument(opts: {
 	css: string;
 	bodyHtml: string;
 	lang?: string;
+	description?: string;
 }): string {
 	const trimmedCss = opts.css.trimStart();
 	const cssBlock =
@@ -19,6 +20,13 @@ export function wrapDocument(opts: {
 			? opts.lang.trim()
 			: DEFAULT_LANG;
 
+	const descriptionMeta =
+		typeof opts.description === "string" && opts.description.trim() !== ""
+			? '<meta name="description" content="' +
+				escapeAttr(opts.description) +
+				'">'
+			: "";
+
 	return (
 		"<!doctype html>" +
 		'<html lang="' +
@@ -30,6 +38,7 @@ export function wrapDocument(opts: {
 		"<title>" +
 		escapeHtml(opts.title) +
 		"</title>" +
+		descriptionMeta +
 		cssBlock +
 		"</head>" +
 		"<body>" +

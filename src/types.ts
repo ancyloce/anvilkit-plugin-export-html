@@ -1,7 +1,25 @@
-import type { PageIR, StudioPluginContext } from "@anvilkit/core/types";
+import type {
+	IRAssetResolver,
+	PageIR,
+	StudioPluginContext,
+} from "@anvilkit/core/types";
+
+/**
+ * Optional hints the format passes to a custom fetcher.
+ *
+ * The default fetcher uses these to enforce byte caps before fully
+ * downloading a payload (Content-Length pre-check + streaming body).
+ * Custom fetchers are free to ignore the bag entirely; the field
+ * exists so hosts that wrap `defaultFetchAsset` can honor the same
+ * limits the format would have applied.
+ */
+export interface FetchAssetOptions {
+	readonly maxBytes?: number;
+}
 
 export type FetchAssetFn = (
 	url: string,
+	opts?: FetchAssetOptions,
 ) => Promise<{ bytes: Uint8Array; contentType: string }>;
 
 /**
@@ -35,4 +53,13 @@ export interface HtmlExportOptions extends Record<string, unknown> {
 	 * host can perform the export itself.
 	 */
 	readonly buildIR?: IRBuilder;
+	/**
+	 * Optional asset resolvers consulted before rendering. Used by the
+	 * header action's `buildIR` path so `asset://` references resolve
+	 * the same way they would when the host calls `format.run()`
+	 * directly with `runtime.assetResolvers`. When the host's export
+	 * pipeline already supplies resolvers via the third `runCtx`
+	 * argument to `format.run()`, those are merged with this list.
+	 */
+	readonly assetResolvers?: readonly IRAssetResolver[];
 }
