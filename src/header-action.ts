@@ -1,5 +1,6 @@
 import type {
 	ExportFormatDefinition,
+	IRAssetResolver,
 	StudioHeaderAction,
 	StudioPluginContext,
 } from "@anvilkit/core/types";
@@ -20,7 +21,7 @@ const DEFAULT_HEADER_ACTION: Omit<StudioHeaderAction, "onClick"> = {
  *
  * - When `options.buildIR` is provided, the action constructs a
  *   `PageIR` via that builder, runs the export format with any
- *   `assetResolvers` configured on the plugin, and emits
+ *   asset resolvers registered in the Studio runtime, and emits
  *   `anvilkit:export:ready` with the resulting payload (host listens
  *   to trigger a download).
  * - Otherwise, the action emits `anvilkit:export:request` so the host
@@ -34,6 +35,9 @@ const DEFAULT_HEADER_ACTION: Omit<StudioHeaderAction, "onClick"> = {
 export function createExportHtmlHeaderAction(
 	format: ExportFormatDefinition<HtmlExportOptions>,
 	options: HtmlExportOptions,
+	runtime?: {
+		readonly getAssetResolvers?: () => readonly IRAssetResolver[];
+	},
 ): StudioHeaderAction {
 	const buildIR: IRBuilder | undefined = options.buildIR;
 
@@ -57,7 +61,7 @@ export function createExportHtmlHeaderAction(
 			try {
 				const ir = await buildIR(ctx);
 				const result = await format.run(ir, options, {
-					assetResolvers: options.assetResolvers,
+					assetResolvers: runtime?.getAssetResolvers?.() ?? [],
 				});
 				ctx.emit("anvilkit:export:ready", {
 					formatId: format.id,

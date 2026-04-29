@@ -113,7 +113,7 @@ export async function inlineAssets(
 	assets: readonly PageIRAsset[],
 	opts: {
 		thresholdBytes: number;
-		fetchAsset: FetchAssetFn;
+		fetchAsset?: FetchAssetFn;
 		emittedAssetIds?: ReadonlySet<string>;
 	},
 ): Promise<{ inlined: Map<string, string>; warnings: ExportWarning[] }> {
@@ -126,12 +126,17 @@ export async function inlineAssets(
 		? assets.filter((asset) => opts.emittedAssetIds!.has(asset.id))
 		: assets;
 
-	const usingDefaultFetcher = opts.fetchAsset === defaultFetchAsset;
+	if (!opts.fetchAsset) {
+		return { inlined: new Map(), warnings: [] };
+	}
+
+	const fetchAsset = opts.fetchAsset;
+	const usingDefaultFetcher = fetchAsset === defaultFetchAsset;
 	const entries = await Promise.all(
 		candidates.map((asset) =>
 			inlineAsset(asset, {
 				thresholdBytes: opts.thresholdBytes,
-				fetchAsset: opts.fetchAsset,
+				fetchAsset,
 				usingDefaultFetcher,
 			}),
 		),

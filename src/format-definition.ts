@@ -5,7 +5,7 @@ import type {
 
 import { emitCss } from "./emit-css.js";
 import { emitHtml, makeEmitContext } from "./emit-html.js";
-import { defaultFetchAsset, inlineAssets } from "./inline-assets.js";
+import { inlineAssets } from "./inline-assets.js";
 import { resolveHtmlAssetUrls } from "./resolve-assets.js";
 import { substituteAssets } from "./substitute-assets.js";
 import type { HtmlExportOptions } from "./types.js";
@@ -34,7 +34,7 @@ export const htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {
 			resolvedIr.assets,
 			{
 				thresholdBytes: options.inlineAssetThresholdBytes ?? 32_768,
-				fetchAsset: options.fetchAsset ?? defaultFetchAsset,
+				...(options.fetchAsset ? { fetchAsset: options.fetchAsset } : {}),
 				emittedAssetIds,
 			},
 		);

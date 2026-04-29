@@ -27,15 +27,24 @@ export function createHtmlExportPlugin(
 		run: (ir, runtimeOpts, runCtx) =>
 			htmlFormat.run(ir, { ...opts, ...runtimeOpts }, runCtx),
 	};
-	const boundHeaderAction = createExportHtmlHeaderAction(boundFormat, opts);
+	const shouldRegisterHeaderAction =
+		opts.headerAction ?? (opts.buildIR !== undefined);
 
 	return {
 		meta: htmlExportPluginMeta,
-		register(_ctx) {
+		register(ctx) {
+			const headerActions = shouldRegisterHeaderAction
+				? [
+						createExportHtmlHeaderAction(boundFormat, opts, {
+							getAssetResolvers: ctx.getAssetResolvers,
+						}),
+					]
+				: [];
+
 			return {
 				meta: htmlExportPluginMeta,
 				exportFormats: [boundFormat],
-				headerActions: [boundHeaderAction],
+				...(headerActions.length > 0 ? { headerActions } : {}),
 			};
 		},
 	};

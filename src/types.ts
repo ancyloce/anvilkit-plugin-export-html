@@ -62,4 +62,13 @@ export interface HtmlExportOptions extends Record<string, unknown> {
 	 * argument to `format.run()`, those are merged with this list.
 	 */
 	readonly assetResolvers?: readonly IRAssetResolver[];
+	/**
+	 * Whether `createHtmlExportPlugin()` should contribute the Studio
+	 * header action. Defaults to `true` when `buildIR` is supplied and
+	 * `false` otherwise, so the stock Studio toolbar only shows a
+	 * "Download HTML" action when the plugin can run the export
+	 * end-to-end. Set this to `true` without `buildIR` only when the host
+	 * has wired an `anvilkit:export:request` listener.
+	 */
+	readonly headerAction?: boolean;
 }
