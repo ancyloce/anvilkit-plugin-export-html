@@ -22,3 +22,9 @@
 - **Standalone-document focus.** The current surface is optimized for
   emitting a single HTML document with optional asset inlining rather
   than a multi-file site export pipeline.
+- **Host-controlled inlining.** Remote asset fetching is opt-in through
+  `fetchAsset`; exports without a fetcher preserve asset URLs rather
+  than performing implicit network requests.
+- **Header action gating.** `createHtmlExportPlugin()` only contributes
+  the download header action by default when `buildIR` is supplied. Pass
+  `headerAction: true` to expose the request-only event path.
