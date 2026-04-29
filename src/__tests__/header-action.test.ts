@@ -6,6 +6,7 @@ import type {
 import { describe, expect, it, vi } from "vitest";
 
 import { createHtmlExportPlugin } from "../create-html-export-plugin.js";
+import { exportHtmlHeaderAction } from "../header-action.js";
 
 const studioConfig = StudioConfigSchema.parse({});
 
@@ -37,8 +38,16 @@ function makeHeroIr(): PageIR {
 }
 
 describe("export header action wiring", () => {
-	it("emits anvilkit:export:request when buildIR is not provided", async () => {
+	it("does not register a header action by default when buildIR is not provided", async () => {
 		const plugin = createHtmlExportPlugin({ title: "Page" });
+		const ctx = makeCtx();
+		const registration = await plugin.register(ctx);
+
+		expect(registration.headerActions ?? []).toEqual([]);
+	});
+
+	it("can opt into a request-only header action without buildIR", async () => {
+		const plugin = createHtmlExportPlugin({ title: "Page", headerAction: true });
 		const ctx = makeCtx();
 		const registration = await plugin.register(ctx);
 		const action = registration.headerActions?.[0];
@@ -54,6 +63,18 @@ describe("export header action wiring", () => {
 			"anvilkit:export:request",
 			expect.objectContaining({ formatId: "html" }),
 		);
+	});
+
+	it("keeps the default unbound header action request-only", async () => {
+		const ctx = makeCtx();
+
+		await exportHtmlHeaderAction.onClick(ctx);
+
+		const emit = ctx.emit as ReturnType<typeof vi.fn>;
+		expect(emit).toHaveBeenCalledWith("anvilkit:export:request", {
+			formatId: "html",
+			options: {},
+		});
 	});
 
 	it("runs the export and emits anvilkit:export:ready when buildIR is provided", async () => {
@@ -88,7 +109,7 @@ describe("export header action wiring", () => {
 		expect(payload?.content).toContain("<title>Page</title>");
 	});
 
-	it("forwards configured assetResolvers when running with buildIR", async () => {
+	it("forwards registered assetResolvers when running with buildIR", async () => {
 		const ir: PageIR = {
 			version: "1",
 			root: {
@@ -122,10 +143,12 @@ describe("export header action wiring", () => {
 		);
 		const plugin = createHtmlExportPlugin({
 			buildIR: () => ir,
-			assetResolvers: [resolver],
 			fetchAsset: vi.fn().mockRejectedValue(new Error("skip inline")),
 		});
-		const ctx = makeCtx();
+		const ctx: StudioPluginContext = {
+			...makeCtx(),
+			getAssetResolvers: () => [resolver],
+		};
 		const registration = await plugin.register(ctx);
 		const action = registration.headerActions?.[0];
 

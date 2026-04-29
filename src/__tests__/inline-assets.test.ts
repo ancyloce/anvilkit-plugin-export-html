@@ -1,5 +1,6 @@
 import type { PageIRAsset } from "@anvilkit/core/types";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { htmlFormat } from "../format-definition.js";
 import { defaultFetchAsset, inlineAssets } from "../inline-assets.js";
 import { encodeBase64 } from "../internal/base64.js";
 
@@ -144,6 +145,51 @@ describe("inlineAssets", () => {
 
 		expect(fetchAsset).not.toHaveBeenCalled();
 		expect(result.inlined.size).toBe(0);
+	});
+
+	it("does not fetch emitted assets unless a fetchAsset callback is supplied", async () => {
+		const realFetch = globalThis.fetch;
+		const fetch = vi.fn();
+		globalThis.fetch = fetch as unknown as typeof globalThis.fetch;
+		try {
+			const result = await htmlFormat.run(
+				{
+					version: "1",
+					root: {
+						id: "root",
+						type: "__root__",
+						props: {},
+						children: [
+							{
+								id: "blog-1",
+								type: "BlogList",
+								props: {
+									posts: [
+										{
+											title: "Launch",
+											description: "No implicit fetch.",
+											imageSrc: "https://cdn.example/a.png",
+											imageAlt: "Launch image",
+										},
+									],
+								},
+							},
+						],
+					},
+					assets: [
+						{ kind: "image", id: "img1", url: "https://cdn.example/a.png" },
+					],
+					metadata: {},
+				},
+				{},
+			);
+
+			expect(fetch).not.toHaveBeenCalled();
+			expect(result.content).toContain('src="https://cdn.example/a.png"');
+			expect(result.warnings).toEqual([]);
+		} finally {
+			globalThis.fetch = realFetch;
+		}
 	});
 
 	it("fetches multiple image assets concurrently", async () => {

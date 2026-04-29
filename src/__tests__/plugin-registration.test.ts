@@ -42,8 +42,11 @@ describe("createHtmlExportPlugin registration", () => {
 		expect(result.filename).toBe("page.html");
 	});
 
-	it("contributes the export-html header action", async () => {
-		const runtime = await compilePlugins([createHtmlExportPlugin()], makeCtx());
+	it("contributes the export-html header action when buildIR is configured", async () => {
+		const runtime = await compilePlugins(
+			[createHtmlExportPlugin({ buildIR: () => heroFixture })],
+			makeCtx(),
+		);
 
 		expect(
 			runtime.headerActions.some((action) => action.id === "export-html"),

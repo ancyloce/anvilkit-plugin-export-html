@@ -174,8 +174,17 @@ describe("createHtmlExportPlugin", () => {
 		expect(countOccurrences(result.content, "</body>")).toBe(1);
 	});
 
-	it("registers the export html header action", async () => {
+	it("omits the export html header action until buildIR is provided", async () => {
 		const runtime = await compilePlugins([createHtmlExportPlugin()], makeCtx());
+
+		expect(runtime.headerActions).toHaveLength(0);
+	});
+
+	it("registers the export html header action when buildIR is provided", async () => {
+		const runtime = await compilePlugins(
+			[createHtmlExportPlugin({ buildIR: () => makeHeroIr() })],
+			makeCtx(),
+		);
 
 		expect(runtime.headerActions).toHaveLength(1);
 		expect(runtime.headerActions[0]).toEqual(
