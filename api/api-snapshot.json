@@ -162,11 +162,7 @@
 								"kind": "inline-tag",
 								"tag": "@link",
 								"text": "PageIR",
-								"target": {
-									"packageName": "@anvilkit/core",
-									"packagePath": "src/types/ir.ts",
-									"qualifiedName": "PageIR"
-								}
+								"target": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
 							},
 							{
 								"kind": "text",
@@ -567,11 +563,7 @@
 						"kind": "inline-tag",
 						"tag": "@link",
 						"text": "PageIR",
-						"target": {
-							"packageName": "@anvilkit/core",
-							"packagePath": "src/types/ir.ts",
-							"qualifiedName": "PageIR"
-						}
+						"target": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
 					},
 					{
 						"kind": "text",
@@ -648,7 +640,8 @@
 											"qualifiedName": "PageIR"
 										},
 										"name": "PageIR",
-										"package": "@anvilkit/core"
+										"package": "@anvilkit/core",
+										"externalUrl": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
 									},
 									{
 										"type": "reference",
@@ -666,7 +659,8 @@
 													"qualifiedName": "PageIR"
 												},
 												"name": "PageIR",
-												"package": "@anvilkit/core"
+												"package": "@anvilkit/core",
+												"externalUrl": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
 											}
 										],
 										"name": "Promise",
@@ -1313,16 +1307,7 @@
 		},
 		{
 			"kind": "text",
-			"text": ". |\n\n## Phase 3 references\n\nSee the [Phase 3 plan]("
-		},
-		{
-			"kind": "relative-link",
-			"text": "../../../docs/plans/phase-3-export-ai-pipeline-plan.md",
-			"target": 2
-		},
-		{
-			"kind": "text",
-			"text": ")\n("
+			"text": ". |\n\n## Phase 3 references\n\nSee the [Phase 3 plan](https://github.com/ancyloce/anvilkit-studio/blob/main/docs/plans/phase-3-export-ai-pipeline-plan.md)\n("
 		},
 		{
 			"kind": "code",
@@ -1330,16 +1315,7 @@
 		},
 		{
 			"kind": "text",
-			"text": ") and the\n[architecture package catalog]("
-		},
-		{
-			"kind": "relative-link",
-			"text": "../../../docs/ai-context/anvilkit-architecture.md",
-			"target": 3
-		},
-		{
-			"kind": "text",
-			"text": ")\n("
+			"text": ") and the architecture package catalog\n("
 		},
 		{
 			"kind": "code",
@@ -1593,15 +1569,13 @@
 	"files": {
 		"entries": {
 			"1": "src/index.ts",
-			"2": "../../../docs/plans/phase-3-export-ai-pipeline-plan.md",
-			"3": "../../../docs/ai-context/anvilkit-architecture.md",
-			"4": "README.md",
-			"5": ""
+			"2": "README.md",
+			"3": ""
 		},
 		"reflections": {
 			"1": 0,
-			"4": 0,
-			"5": 0
+			"2": 0,
+			"3": 0
 		}
 	}
 }

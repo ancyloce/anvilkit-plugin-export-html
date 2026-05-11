@@ -62,9 +62,8 @@ without `buildIR` to expose the request-only action.
 
 ## Phase 3 references
 
-See the [Phase 3 plan](../../../docs/plans/phase-3-export-ai-pipeline-plan.md)
-(`M4 — @anvilkit/plugin-export-html`) and the
-[architecture package catalog](../../../docs/ai-context/anvilkit-architecture.md)
+See the [Phase 3 plan](https://github.com/ancyloce/anvilkit-studio/blob/main/docs/plans/phase-3-export-ai-pipeline-plan.md)
+(`M4 — @anvilkit/plugin-export-html`) and the architecture package catalog
 (`§7 — @anvilkit/plugins [Stubs Exist]`) for the export-plugin role and
 Phase 3 dependency layering.
 
