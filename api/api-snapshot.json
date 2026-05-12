@@ -1307,23 +1307,47 @@
 		},
 		{
 			"kind": "text",
-			"text": ". |\n\n## Phase 3 references\n\nSee the [Phase 3 plan](https://github.com/ancyloce/anvilkit-studio/blob/main/docs/plans/phase-3-export-ai-pipeline-plan.md)\n("
+			"text": ". |\n\n## Architecture context\n\nThe export-plugin contract ("
 		},
 		{
 			"kind": "code",
-			"text": "`M4 — @anvilkit/plugin-export-html`"
+			"text": "`exportFormats`"
 		},
 		{
 			"kind": "text",
-			"text": ") and the architecture package catalog\n("
+			"text": ", "
 		},
 		{
 			"kind": "code",
-			"text": "`§7 — @anvilkit/plugins [Stubs Exist]`"
+			"text": "`anvilkit:export:request`"
 		},
 		{
 			"kind": "text",
-			"text": ") for the export-plugin role and\nPhase 3 dependency layering.\n\n## Peer dependencies\n\n| Package | Version |\n| ------- | ------- |\n| "
+			"text": ",\n"
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:ready`"
+		},
+		{
+			"kind": "text",
+			"text": ") is defined in "
+		},
+		{
+			"kind": "code",
+			"text": "`@anvilkit/core`"
+		},
+		{
+			"kind": "text",
+			"text": ". This package\nis the reference implementation. The escape contract lives in\n["
+		},
+		{
+			"kind": "code",
+			"text": "`docs/security/plugin-trust-model.md`"
+		},
+		{
+			"kind": "text",
+			"text": "](https://github.com/ancyloce/anvilkit-studio/blob/main/docs/security/plugin-trust-model.md)\nand is enforced by a 24-test hostile-input battery in CI.\n\n## Peer dependencies\n\n| Package | Version |\n| ------- | ------- |\n| "
 		},
 		{
 			"kind": "code",
