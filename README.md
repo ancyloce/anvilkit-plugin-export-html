@@ -60,12 +60,13 @@ without `buildIR` to expose the request-only action.
 | `FetchAssetFn` | Host-supplied async asset loader used when inlining external assets. |
 | `IRBuilder` | Callback signature for the `buildIR` option — receives the live plugin context and returns a `PageIR`. |
 
-## Phase 3 references
+## Architecture context
 
-See the [Phase 3 plan](https://github.com/ancyloce/anvilkit-studio/blob/main/docs/plans/phase-3-export-ai-pipeline-plan.md)
-(`M4 — @anvilkit/plugin-export-html`) and the architecture package catalog
-(`§7 — @anvilkit/plugins [Stubs Exist]`) for the export-plugin role and
-Phase 3 dependency layering.
+The export-plugin contract (`exportFormats`, `anvilkit:export:request`,
+`anvilkit:export:ready`) is defined in `@anvilkit/core`. This package
+is the reference implementation. The escape contract lives in
+[`docs/security/plugin-trust-model.md`](https://github.com/ancyloce/anvilkit-studio/blob/main/docs/security/plugin-trust-model.md)
+and is enforced by a 24-test hostile-input battery in CI.
 
 ## Peer dependencies
 
