@@ -6,6 +6,7 @@ import type {
 } from "@anvilkit/core/types";
 import { describe, expect, it, vi } from "vitest";
 
+import packageJson from "../../package.json";
 import { createHtmlExportPlugin } from "../create-html-export-plugin.js";
 import { htmlFormat } from "../format-definition.js";
 
@@ -27,7 +28,7 @@ function makeCtx(): StudioPluginContext {
 function expectPluginMeta(plugin: StudioPlugin): void {
 	expect(plugin.meta.id).toBe("anvilkit-plugin-export-html");
 	expect(plugin.meta.name).toBe("HTML Export");
-	expect(plugin.meta.version).toBe("0.1.0-alpha.0");
+	expect(plugin.meta.version).toBe(packageJson.version);
 	expect(plugin.meta.coreVersion).toBe("^0.1.0-alpha");
 	expect(plugin.meta.description).toEqual(expect.any(String));
 	expect(plugin.meta.description).not.toHaveLength(0);
