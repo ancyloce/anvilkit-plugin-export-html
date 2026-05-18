@@ -8,7 +8,7 @@ flows when the host supplies a `buildIR` callback.
 
 > **Alpha status (0.1.x).** The package surface is implemented and
 > tested, but the emitted HTML/CSS contract may still evolve before
-> `0.1.0`.
+> `1.0.0`.
 
 ## Install
 
@@ -74,4 +74,4 @@ and is enforced by a 24-test hostile-input battery in CI.
 | ------- | ------- |
 | `react` | `^18.2.0 || ^19.0.0` |
 | `react-dom` | `^18.2.0 || ^19.0.0` |
-| `@puckeditor/core` | `^0.21.0` |
+| `@puckeditor/core` | `^0.21.2` |

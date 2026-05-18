@@ -4,6 +4,7 @@ import type {
 	StudioPluginMeta,
 } from "@anvilkit/core/types";
 
+import packageJson from "../package.json";
 import { htmlFormat } from "./format-definition.js";
 import { createExportHtmlHeaderAction } from "./header-action.js";
 import type { HtmlExportOptions } from "./types.js";
@@ -11,7 +12,9 @@ import type { HtmlExportOptions } from "./types.js";
 const htmlExportPluginMeta: StudioPluginMeta = {
 	id: "anvilkit-plugin-export-html",
 	name: "HTML Export",
-	version: "0.1.0-alpha.0",
+	// Derived from package.json so a Changesets bump can never drift the
+	// runtime metadata; the metadata-drift test guards regressions.
+	version: packageJson.version,
 	coreVersion: "^0.1.0-alpha",
 	description: "Export Puck pages as standalone HTML documents.",
 };
@@ -28,7 +31,7 @@ export function createHtmlExportPlugin(
 			htmlFormat.run(ir, { ...opts, ...runtimeOpts }, runCtx),
 	};
 	const shouldRegisterHeaderAction =
-		opts.headerAction ?? (opts.buildIR !== undefined);
+		opts.headerAction ?? opts.buildIR !== undefined;
 
 	return {
 		meta: htmlExportPluginMeta,
