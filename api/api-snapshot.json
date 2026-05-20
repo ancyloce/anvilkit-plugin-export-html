@@ -1067,31 +1067,15 @@
 	"readme": [
 		{
 			"kind": "text",
-			"text": "# @anvilkit/plugin-export-html\n\nHTML export plugin for Anvilkit Studio. "
+			"text": "# @anvilkit/plugin-export-html\n\n> **Alpha ("
 		},
 		{
 			"kind": "code",
-			"text": "`@anvilkit/plugin-export-html`"
+			"text": "`0.1.3`"
 		},
 		{
 			"kind": "text",
-			"text": "\nregisters the first real Phase 3 export format, turning "
-		},
-		{
-			"kind": "code",
-			"text": "`PageIR`"
-		},
-		{
-			"kind": "text",
-			"text": "\ndocuments into standalone HTML with emitted CSS, optional asset\ninlining, and an opt-in Studio header action for interactive export\nflows when the host supplies a "
-		},
-		{
-			"kind": "code",
-			"text": "`buildIR`"
-		},
-		{
-			"kind": "text",
-			"text": " callback.\n\n> **Alpha status (0.1.x).** The package surface is implemented and\n> tested, but the emitted HTML/CSS contract may still evolve before\n> "
+			"text": ").** The package surface is implemented and tested, but the emitted HTML/CSS contract may evolve before "
 		},
 		{
 			"kind": "code",
@@ -1099,207 +1083,7 @@
 		},
 		{
 			"kind": "text",
-			"text": ".\n\n## Install\n\n"
-		},
-		{
-			"kind": "code",
-			"text": "```bash\npnpm add @anvilkit/plugin-export-html @anvilkit/core react react-dom @puckeditor/core\n```"
-		},
-		{
-			"kind": "text",
-			"text": "\n\n## Quickstart\n\n"
-		},
-		{
-			"kind": "code",
-			"text": "```ts\nimport { Studio } from \"@anvilkit/core\";\nimport { puckDataToIR } from \"@anvilkit/ir\";\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\nimport { puckConfig } from \"./puck-config\";\n\nconst htmlExport = createHtmlExportPlugin({\n  title: \"Marketing page\",\n  lang: \"en\",\n  inlineAssetThresholdBytes: 32_768,\n  // Required for the \"Download HTML\" header action. When supplied, the\n  // action runs the export end-to-end and emits `anvilkit:export:ready`\n  // with the resulting payload.\n  buildIR: (ctx) => puckDataToIR(ctx.getData(), puckConfig),\n});\n\n<Studio puckConfig={puckConfig} plugins={[htmlExport]} />;\n```"
-		},
-		{
-			"kind": "text",
-			"text": "\n\nOptions passed to "
-		},
-		{
-			"kind": "code",
-			"text": "`createHtmlExportPlugin()`"
-		},
-		{
-			"kind": "text",
-			"text": " are used as defaults for\nevery export run; host calls to "
-		},
-		{
-			"kind": "code",
-			"text": "`exportAs(\"html\", { … })`"
-		},
-		{
-			"kind": "text",
-			"text": " shallow-merge\non top. Remote asset inlining is host-controlled: pass "
-		},
-		{
-			"kind": "code",
-			"text": "`fetchAsset`"
-		},
-		{
-			"kind": "text",
-			"text": " (or\nwrap "
-		},
-		{
-			"kind": "code",
-			"text": "`defaultFetchAsset`"
-		},
-		{
-			"kind": "text",
-			"text": " from the "
-		},
-		{
-			"kind": "code",
-			"text": "`inline-assets`"
-		},
-		{
-			"kind": "text",
-			"text": " subpath) to opt into\nfetching asset bytes. Without a fetcher, matching images stay as URLs.\n\nBy default, "
-		},
-		{
-			"kind": "code",
-			"text": "`createHtmlExportPlugin()`"
-		},
-		{
-			"kind": "text",
-			"text": " contributes the \"Download HTML\"\nheader action only when "
-		},
-		{
-			"kind": "code",
-			"text": "`buildIR`"
-		},
-		{
-			"kind": "text",
-			"text": " is supplied. Hosts that intentionally\nhandle "
-		},
-		{
-			"kind": "code",
-			"text": "`anvilkit:export:request`"
-		},
-		{
-			"kind": "text",
-			"text": " themselves can pass "
-		},
-		{
-			"kind": "code",
-			"text": "`headerAction: true`"
-		},
-		{
-			"kind": "text",
-			"text": "\nwithout "
-		},
-		{
-			"kind": "code",
-			"text": "`buildIR`"
-		},
-		{
-			"kind": "text",
-			"text": " to expose the request-only action.\n\n## Public API\n\n| Export | Purpose |\n| ------ | ------- |\n| "
-		},
-		{
-			"kind": "code",
-			"text": "`createHtmlExportPlugin`"
-		},
-		{
-			"kind": "text",
-			"text": " | Register the HTML export format and, when configured, its header action with "
-		},
-		{
-			"kind": "code",
-			"text": "`@anvilkit/core`"
-		},
-		{
-			"kind": "text",
-			"text": ". Options passed here become run-time defaults. |\n| "
-		},
-		{
-			"kind": "code",
-			"text": "`htmlFormat`"
-		},
-		{
-			"kind": "text",
-			"text": " | Direct "
-		},
-		{
-			"kind": "code",
-			"text": "`ExportFormatDefinition`"
-		},
-		{
-			"kind": "text",
-			"text": " for headless export pipelines and tests. |\n| "
-		},
-		{
-			"kind": "code",
-			"text": "`createExportHtmlHeaderAction`"
-		},
-		{
-			"kind": "text",
-			"text": " | Build a header action bound to a configured format and options. Used internally by "
-		},
-		{
-			"kind": "code",
-			"text": "`createHtmlExportPlugin`"
-		},
-		{
-			"kind": "text",
-			"text": ". |\n| "
-		},
-		{
-			"kind": "code",
-			"text": "`exportHtmlHeaderAction`"
-		},
-		{
-			"kind": "text",
-			"text": " | Default unbound header action; emits an "
-		},
-		{
-			"kind": "code",
-			"text": "`anvilkit:export:request`"
-		},
-		{
-			"kind": "text",
-			"text": " event for hosts to handle. |\n| "
-		},
-		{
-			"kind": "code",
-			"text": "`HtmlExportOptions`"
-		},
-		{
-			"kind": "text",
-			"text": " | Configure document title, language, host-controlled asset inlining, custom asset fetchers, header-action behavior, and an optional "
-		},
-		{
-			"kind": "code",
-			"text": "`buildIR`"
-		},
-		{
-			"kind": "text",
-			"text": " callback. |\n| "
-		},
-		{
-			"kind": "code",
-			"text": "`FetchAssetFn`"
-		},
-		{
-			"kind": "text",
-			"text": " | Host-supplied async asset loader used when inlining external assets. |\n| "
-		},
-		{
-			"kind": "code",
-			"text": "`IRBuilder`"
-		},
-		{
-			"kind": "text",
-			"text": " | Callback signature for the "
-		},
-		{
-			"kind": "code",
-			"text": "`buildIR`"
-		},
-		{
-			"kind": "text",
-			"text": " option — receives the live plugin context and returns a "
+			"text": ".\n\nHTML export plugin for Anvilkit Studio. Turns "
 		},
 		{
 			"kind": "code",
@@ -1307,11 +1091,27 @@
 		},
 		{
 			"kind": "text",
-			"text": ". |\n\n## Architecture context\n\nThe export-plugin contract ("
+			"text": " documents into standalone HTML with emitted CSS, optional asset inlining, and an opt-in Studio header action for interactive export flows when the host supplies a "
 		},
 		{
 			"kind": "code",
-			"text": "`exportFormats`"
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " callback. The reference implementation of the Anvilkit export-plugin contract — security-hardened against hostile input by a 24-test battery in CI.\n\n## Installation\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```bash\npnpm add @anvilkit/plugin-export-html @anvilkit/core react react-dom @puckeditor/core\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\nNon-optional peers: "
+		},
+		{
+			"kind": "code",
+			"text": "`react ^18.2.0 || ^19.0.0`"
 		},
 		{
 			"kind": "text",
@@ -1319,19 +1119,19 @@
 		},
 		{
 			"kind": "code",
-			"text": "`anvilkit:export:request`"
+			"text": "`react-dom ^18.2.0 || ^19.0.0`"
 		},
 		{
 			"kind": "text",
-			"text": ",\n"
+			"text": ", "
 		},
 		{
 			"kind": "code",
-			"text": "`anvilkit:export:ready`"
+			"text": "`@puckeditor/core ^0.21.2`"
 		},
 		{
 			"kind": "text",
-			"text": ") is defined in "
+			"text": ". Only "
 		},
 		{
 			"kind": "code",
@@ -1339,27 +1139,235 @@
 		},
 		{
 			"kind": "text",
-			"text": ". This package\nis the reference implementation. The escape contract lives in\n["
+			"text": " is a runtime dependency.\n\n## Quickstart\n\n"
 		},
 		{
 			"kind": "code",
-			"text": "`docs/security/plugin-trust-model.md`"
+			"text": "```ts\nimport { Studio } from \"@anvilkit/core\";\nimport { puckDataToIR } from \"@anvilkit/ir\";\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\nimport { puckConfig } from \"./puck-config\";\n\nconst htmlExport = createHtmlExportPlugin({\n  title: \"Marketing page\",\n  lang: \"en\",\n  inlineAssetThresholdBytes: 32_768,\n  buildIR: (ctx) => puckDataToIR(ctx.getData(), puckConfig),\n});\n\n<Studio puckConfig={puckConfig} plugins={[htmlExport]} />;\n```"
 		},
 		{
 			"kind": "text",
-			"text": "](https://github.com/ancyloce/anvilkit-studio/blob/main/docs/security/plugin-trust-model.md)\nand is enforced by a 24-test hostile-input battery in CI.\n\n## Peer dependencies\n\n| Package | Version |\n| ------- | ------- |\n| "
+			"text": "\n\nSupplying "
 		},
 		{
 			"kind": "code",
-			"text": "`react`"
+			"text": "`buildIR`"
 		},
 		{
 			"kind": "text",
-			"text": " | "
+			"text": " lights up the \"Download HTML\" header action: clicking it runs the export end-to-end and emits "
 		},
 		{
 			"kind": "code",
-			"text": "`^18.2.0 || ^19.0.0`"
+			"text": "`anvilkit:export:ready`"
+		},
+		{
+			"kind": "text",
+			"text": " with the resulting payload. Omit "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " if the host wants to handle export itself — the action emits "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:request`"
+		},
+		{
+			"kind": "text",
+			"text": " instead.\n\n## Core features\n\n- **Standalone HTML5 output** — wrapped document with emitted "
+		},
+		{
+			"kind": "code",
+			"text": "`<style>`"
+		},
+		{
+			"kind": "text",
+			"text": ", BCP 47 "
+		},
+		{
+			"kind": "code",
+			"text": "`lang`"
+		},
+		{
+			"kind": "text",
+			"text": ", and document title.\n- **Built-in component emitters** — first-party HTML output for "
+		},
+		{
+			"kind": "code",
+			"text": "`hero`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`navbar`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`pricing-minimal`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`bento-grid`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`section`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`statistics`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`blog-list`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`helps`"
+		},
+		{
+			"kind": "text",
+			"text": ", and "
+		},
+		{
+			"kind": "code",
+			"text": "`logo-clouds`"
+		},
+		{
+			"kind": "text",
+			"text": ".\n- **Selective asset inlining** — assets below "
+		},
+		{
+			"kind": "code",
+			"text": "`inlineAssetThresholdBytes`"
+		},
+		{
+			"kind": "text",
+			"text": " are base64-inlined; larger or remote-only assets stay as URLs. Host controls the network via "
+		},
+		{
+			"kind": "code",
+			"text": "`fetchAsset`"
+		},
+		{
+			"kind": "text",
+			"text": ".\n- **Two header-action modes** — end-to-end with "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " or host-driven via the "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:request`"
+		},
+		{
+			"kind": "text",
+			"text": " event.\n- **Security-hardened escaping** — "
+		},
+		{
+			"kind": "code",
+			"text": "`escapeHtml`"
+		},
+		{
+			"kind": "text",
+			"text": " and "
+		},
+		{
+			"kind": "code",
+			"text": "`escapeAttr`"
+		},
+		{
+			"kind": "text",
+			"text": " enforced by a 24-test hostile-input battery, codified by the Anvilkit plugin trust model.\n- **Direct-format access** — "
+		},
+		{
+			"kind": "code",
+			"text": "`htmlFormat`"
+		},
+		{
+			"kind": "text",
+			"text": " is exported for headless export pipelines that don't run inside Studio.\n\n## API reference\n\n### Plugin factory\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\nfunction createHtmlExportPlugin(opts?: HtmlExportOptions): StudioPlugin;\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\nReturns a "
+		},
+		{
+			"kind": "code",
+			"text": "`StudioPlugin`"
+		},
+		{
+			"kind": "text",
+			"text": " that registers one export format ("
+		},
+		{
+			"kind": "code",
+			"text": "`id: \"html\"`"
+		},
+		{
+			"kind": "text",
+			"text": ") and, when configured, one header action ("
+		},
+		{
+			"kind": "code",
+			"text": "`id: \"export-html\"`"
+		},
+		{
+			"kind": "text",
+			"text": "). Plugin meta:\n\n| Field         | Value                         |\n| ------------- | ----------------------------- |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`id`"
+		},
+		{
+			"kind": "text",
+			"text": "          | "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit-plugin-export-html`"
 		},
 		{
 			"kind": "text",
@@ -1367,7 +1375,23 @@
 		},
 		{
 			"kind": "code",
-			"text": "`react-dom`"
+			"text": "`name`"
+		},
+		{
+			"kind": "text",
+			"text": "        | "
+		},
+		{
+			"kind": "code",
+			"text": "`HTML Export`"
+		},
+		{
+			"kind": "text",
+			"text": "                 |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`coreVersion`"
 		},
 		{
 			"kind": "text",
@@ -1375,15 +1399,111 @@
 		},
 		{
 			"kind": "code",
-			"text": "`^18.2.0 || ^19.0.0`"
+			"text": "`^0.1.0-alpha`"
 		},
 		{
 			"kind": "text",
-			"text": " |\n| "
+			"text": "                |\n\n### "
 		},
 		{
 			"kind": "code",
-			"text": "`@puckeditor/core`"
+			"text": "`HtmlExportOptions`"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n| Field                       | Type                         | Default                                         | Purpose                                                                        |\n| --------------------------- | ---------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------ |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`title`"
+		},
+		{
+			"kind": "text",
+			"text": "                     | "
+		},
+		{
+			"kind": "code",
+			"text": "`string`"
+		},
+		{
+			"kind": "text",
+			"text": "                     | from IR metadata                                | Document "
+		},
+		{
+			"kind": "code",
+			"text": "`<title>`"
+		},
+		{
+			"kind": "text",
+			"text": ".                                                            |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`lang`"
+		},
+		{
+			"kind": "text",
+			"text": "                      | "
+		},
+		{
+			"kind": "code",
+			"text": "`string`"
+		},
+		{
+			"kind": "text",
+			"text": "                     | "
+		},
+		{
+			"kind": "code",
+			"text": "`\"en\"`"
+		},
+		{
+			"kind": "text",
+			"text": "                                          | BCP 47 tag emitted on "
+		},
+		{
+			"kind": "code",
+			"text": "`<html lang=\"…\">`"
+		},
+		{
+			"kind": "text",
+			"text": ".                                       |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`inlineStyles`"
+		},
+		{
+			"kind": "text",
+			"text": "              | "
+		},
+		{
+			"kind": "code",
+			"text": "`boolean`"
+		},
+		{
+			"kind": "text",
+			"text": "                    | "
+		},
+		{
+			"kind": "code",
+			"text": "`true`"
+		},
+		{
+			"kind": "text",
+			"text": "                                          | When "
+		},
+		{
+			"kind": "code",
+			"text": "`false`"
+		},
+		{
+			"kind": "text",
+			"text": ", CSS is omitted (host owns the stylesheet).                       |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`inlineAssetThresholdBytes`"
 		},
 		{
 			"kind": "text",
@@ -1391,11 +1511,628 @@
 		},
 		{
 			"kind": "code",
-			"text": "`^0.21.2`"
+			"text": "`number`"
 		},
 		{
 			"kind": "text",
-			"text": " |"
+			"text": "                     | "
+		},
+		{
+			"kind": "code",
+			"text": "`32_768`"
+		},
+		{
+			"kind": "text",
+			"text": "                                        | Assets ≤ threshold are base64-inlined; larger stay as URLs.                    |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`fetchAsset`"
+		},
+		{
+			"kind": "text",
+			"text": "                | "
+		},
+		{
+			"kind": "code",
+			"text": "`FetchAssetFn`"
+		},
+		{
+			"kind": "text",
+			"text": "               | none                                            | Host-supplied async asset loader. Without it, remote assets are left as URLs.  |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": "                   | "
+		},
+		{
+			"kind": "code",
+			"text": "`IRBuilder`"
+		},
+		{
+			"kind": "text",
+			"text": "                  | none                                            | When supplied, the header action runs the export end-to-end.                   |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`assetResolvers`"
+		},
+		{
+			"kind": "text",
+			"text": "            | "
+		},
+		{
+			"kind": "code",
+			"text": "`readonly IRAssetResolver[]`"
+		},
+		{
+			"kind": "text",
+			"text": " | none                                            | Asset resolution pipeline. Merged with any resolvers passed to "
+		},
+		{
+			"kind": "code",
+			"text": "`format.run()`"
+		},
+		{
+			"kind": "text",
+			"text": ". |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`headerAction`"
+		},
+		{
+			"kind": "text",
+			"text": "              | "
+		},
+		{
+			"kind": "code",
+			"text": "`boolean`"
+		},
+		{
+			"kind": "text",
+			"text": "                    | "
+		},
+		{
+			"kind": "code",
+			"text": "`true`"
+		},
+		{
+			"kind": "text",
+			"text": " when "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " is supplied, else "
+		},
+		{
+			"kind": "code",
+			"text": "`false`"
+		},
+		{
+			"kind": "text",
+			"text": " | Contribute the \"Download HTML\" header action.                                  |\n\n### "
+		},
+		{
+			"kind": "code",
+			"text": "`FetchAssetFn`"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\ntype FetchAssetFn = (\n  url: string,\n  opts?: FetchAssetOptions,\n) => Promise<{ bytes: Uint8Array; contentType: string }>;\n\ninterface FetchAssetOptions {\n  readonly maxBytes?: number;\n}\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\nThe default fetcher ("
+		},
+		{
+			"kind": "code",
+			"text": "`defaultFetchAsset`"
+		},
+		{
+			"kind": "text",
+			"text": ") does a Content-Length pre-check and streams the body to enforce "
+		},
+		{
+			"kind": "code",
+			"text": "`maxBytes`"
+		},
+		{
+			"kind": "text",
+			"text": ". Custom fetchers may ignore the hint, but doing so foregoes the byte cap.\n\n### "
+		},
+		{
+			"kind": "code",
+			"text": "`IRBuilder`"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\ntype IRBuilder = (ctx: StudioPluginContext) => PageIR | Promise<PageIR>;\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\nHosts typically implement this with "
+		},
+		{
+			"kind": "code",
+			"text": "`puckDataToIR(ctx.getData(), puckConfig)`"
+		},
+		{
+			"kind": "text",
+			"text": " from "
+		},
+		{
+			"kind": "code",
+			"text": "`@anvilkit/ir`"
+		},
+		{
+			"kind": "text",
+			"text": ".\n\n### Direct format access\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\nconst htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {\n  id: \"html\",\n  label: \"HTML\",\n  extension: \"html\",\n  mimeType: \"text/html\",\n  run: async (ir, options, runCtx) => ({ content, filename, warnings }),\n};\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\nUse this when running outside Studio (e.g., CLI tooling, server-rendered export endpoints).\n\n### Header action\n\n| Export                                          | Purpose                                                                      |\n| ----------------------------------------------- | ---------------------------------------------------------------------------- |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`createExportHtmlHeaderAction(format, options)`"
+		},
+		{
+			"kind": "text",
+			"text": " | Build a header action bound to a configured format.                          |\n| "
+		},
+		{
+			"kind": "code",
+			"text": "`exportHtmlHeaderAction`"
+		},
+		{
+			"kind": "text",
+			"text": "                        | Default unbound action; emits "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:request`"
+		},
+		{
+			"kind": "text",
+			"text": " for hosts to handle. |\n\nHeader action metadata: "
+		},
+		{
+			"kind": "code",
+			"text": "`id: \"export-html\"`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`label: \"Download HTML\"`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`icon: \"download\"`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`order: 100`"
+		},
+		{
+			"kind": "text",
+			"text": ".\n\n### Event flow\n\n- "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:ready`"
+		},
+		{
+			"kind": "text",
+			"text": " — fired by the header action when "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " is configured. Payload: "
+		},
+		{
+			"kind": "code",
+			"text": "`{ formatId: \"html\", content: string, filename: string, mimeType: \"text/html\", warnings: ExportWarning[] }`"
+		},
+		{
+			"kind": "text",
+			"text": ".\n- "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:request`"
+		},
+		{
+			"kind": "text",
+			"text": " — fired when "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " is not configured. Payload: "
+		},
+		{
+			"kind": "code",
+			"text": "`{ formatId: \"html\", options }`"
+		},
+		{
+			"kind": "text",
+			"text": ". Hosts handle this by running the export with their own IR + dispatching "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:ready`"
+		},
+		{
+			"kind": "text",
+			"text": " (or by saving the result directly).\n\n## Usage examples\n\n### Standalone export with default settings\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\nimport { puckDataToIR } from \"@anvilkit/ir\";\n\nconst htmlExport = createHtmlExportPlugin({\n  title: \"Untitled page\",\n  buildIR: (ctx) => puckDataToIR(ctx.getData(), puckConfig),\n});\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n### Inlining assets from a private S3 bucket\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\nimport { createHtmlExportPlugin } from \"@anvilkit/plugin-export-html\";\n\nconst fetchAsset = async (url: string, opts) => {\n  const signed = await mySigner.sign(url);\n  const response = await fetch(signed.url, {\n    headers: signed.headers,\n  });\n  if (!response.ok) throw new Error(`fetch ${url} → ${response.status}`);\n  const bytes = new Uint8Array(await response.arrayBuffer());\n  if (opts?.maxBytes && bytes.byteLength > opts.maxBytes) {\n    throw new Error(`asset exceeded ${opts.maxBytes} bytes`);\n  }\n  return {\n    bytes,\n    contentType:\n      response.headers.get(\"Content-Type\") ?? \"application/octet-stream\",\n  };\n};\n\ncreateHtmlExportPlugin({\n  inlineAssetThresholdBytes: 65_536,\n  fetchAsset,\n  buildIR: (ctx) => puckDataToIR(ctx.getData(), puckConfig),\n});\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n### Host-driven export via event bus\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\nconst htmlExport = createHtmlExportPlugin({ headerAction: true });\n\nstudio.eventBus.on(\"anvilkit:export:request\", async ({ formatId, options }) => {\n  if (formatId !== \"html\") return;\n  const ir = puckDataToIR(latestPuckData, puckConfig);\n  const result = await htmlFormat.run(ir, options, { assetResolvers });\n  saveAs(new Blob([result.content], { type: \"text/html\" }), result.filename);\n});\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n### Headless export from a CLI\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "```ts\nimport { htmlFormat } from \"@anvilkit/plugin-export-html\";\nimport { writeFileSync } from \"node:fs\";\n\nconst result = await htmlFormat.run(\n  ir,\n  { title: \"Generated\", lang: \"en\", inlineAssetThresholdBytes: 0 },\n  { assetResolvers: [resolver] },\n);\n\nwriteFileSync(\"dist/page.html\", result.content);\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n## Notes & FAQ\n\n### Asset inlining is host-controlled\n\nThe plugin never fetches the network on its own — assets only inline when the host supplies a "
+		},
+		{
+			"kind": "code",
+			"text": "`fetchAsset`"
+		},
+		{
+			"kind": "text",
+			"text": ". This keeps the export pipeline safe for sandboxed and offline environments. The pipeline order is "
+		},
+		{
+			"kind": "code",
+			"text": "`resolve`"
+		},
+		{
+			"kind": "text",
+			"text": " (via "
+		},
+		{
+			"kind": "code",
+			"text": "`assetResolvers`"
+		},
+		{
+			"kind": "text",
+			"text": ") → "
+		},
+		{
+			"kind": "code",
+			"text": "`inline`"
+		},
+		{
+			"kind": "text",
+			"text": " (if "
+		},
+		{
+			"kind": "code",
+			"text": "`fetchAsset`"
+		},
+		{
+			"kind": "text",
+			"text": " + size threshold allow) → "
+		},
+		{
+			"kind": "code",
+			"text": "`substitute`"
+		},
+		{
+			"kind": "text",
+			"text": " (replace asset IDs with data URLs).\n\n### Built-in emitter coverage\n\nThe package ships first-party HTML emitters for nine component types: "
+		},
+		{
+			"kind": "code",
+			"text": "`hero`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`navbar`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`pricing-minimal`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`bento-grid`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`section`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`statistics`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`blog-list`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`helps`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`logo-clouds`"
+		},
+		{
+			"kind": "text",
+			"text": ". Components outside this set emit a warning and a stub "
+		},
+		{
+			"kind": "code",
+			"text": "`<!-- unsupported component -->`"
+		},
+		{
+			"kind": "text",
+			"text": " comment. Pair the plugin with "
+		},
+		{
+			"kind": "code",
+			"text": "`@anvilkit/plugin-export-react`"
+		},
+		{
+			"kind": "text",
+			"text": " if you need full custom-component fidelity.\n\n### When to opt out of "
+		},
+		{
+			"kind": "code",
+			"text": "`headerAction`"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "`headerAction`"
+		},
+		{
+			"kind": "text",
+			"text": " defaults to "
+		},
+		{
+			"kind": "code",
+			"text": "`true`"
+		},
+		{
+			"kind": "text",
+			"text": " when "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " is supplied (end-to-end mode) and "
+		},
+		{
+			"kind": "code",
+			"text": "`false`"
+		},
+		{
+			"kind": "text",
+			"text": " otherwise. Set it to "
+		},
+		{
+			"kind": "code",
+			"text": "`true`"
+		},
+		{
+			"kind": "text",
+			"text": " without "
+		},
+		{
+			"kind": "code",
+			"text": "`buildIR`"
+		},
+		{
+			"kind": "text",
+			"text": " only when the host has wired an "
+		},
+		{
+			"kind": "code",
+			"text": "`anvilkit:export:request`"
+		},
+		{
+			"kind": "text",
+			"text": " listener — otherwise the user clicks \"Download HTML\" and nothing happens.\n\n### Escaping contract\n\nThe escape contract is enforced by "
+		},
+		{
+			"kind": "code",
+			"text": "`security.test.ts`"
+		},
+		{
+			"kind": "text",
+			"text": " (24-test hostile-input battery). Custom emitters that bypass "
+		},
+		{
+			"kind": "code",
+			"text": "`escapeHtml`"
+		},
+		{
+			"kind": "text",
+			"text": " / "
+		},
+		{
+			"kind": "code",
+			"text": "`escapeAttr`"
+		},
+		{
+			"kind": "text",
+			"text": " are CI-blocked.\n\n### Alpha contract caveats\n\nThe emitted HTML/CSS string is not yet a stability contract. Class names, attribute ordering, and the embedded "
+		},
+		{
+			"kind": "code",
+			"text": "`<style>`"
+		},
+		{
+			"kind": "text",
+			"text": " block may change between alpha versions. Consumers that diff exported output across releases should snapshot only the rendered page, not the raw HTML.\n\n### Bundle budget\n\n"
+		},
+		{
+			"kind": "code",
+			"text": "`.size-limit.json`"
+		},
+		{
+			"kind": "text",
+			"text": " enforces a per-package gzip cap (see "
+		},
+		{
+			"kind": "code",
+			"text": "`scripts/check-bundle-budget.mjs`"
+		},
+		{
+			"kind": "text",
+			"text": "). The export pipeline is "
+		},
+		{
+			"kind": "code",
+			"text": "`O(node count)`"
+		},
+		{
+			"kind": "text",
+			"text": " — large IRs run linearly in the number of nodes.\n\n### See also\n\n- ["
+		},
+		{
+			"kind": "code",
+			"text": "`@anvilkit/plugin-export-react`"
+		},
+		{
+			"kind": "text",
+			"text": "]("
+		},
+		{
+			"kind": "relative-link",
+			"text": "../plugin-export-react/README.md",
+			"target": 2
+		},
+		{
+			"kind": "text",
+			"text": ") — exports the same "
+		},
+		{
+			"kind": "code",
+			"text": "`PageIR`"
+		},
+		{
+			"kind": "text",
+			"text": " as "
+		},
+		{
+			"kind": "code",
+			"text": "`.tsx`"
+		},
+		{
+			"kind": "text",
+			"text": "/"
+		},
+		{
+			"kind": "code",
+			"text": "`.jsx`"
+		},
+		{
+			"kind": "text",
+			"text": " source files for developer hand-off."
 		}
 	],
 	"symbolIdMap": {
@@ -1593,13 +2330,14 @@
 	"files": {
 		"entries": {
 			"1": "src/index.ts",
-			"2": "README.md",
-			"3": ""
+			"2": "../plugin-export-react/README.md",
+			"3": "README.md",
+			"4": ""
 		},
 		"reflections": {
 			"1": 0,
-			"2": 0,
-			"3": 0
+			"3": 0,
+			"4": 0
 		}
 	}
 }

@@ -38,7 +38,7 @@ Supplying `buildIR` lights up the "Download HTML" header action: clicking it run
 - **Built-in component emitters** — first-party HTML output for `hero`, `navbar`, `pricing-minimal`, `bento-grid`, `section`, `statistics`, `blog-list`, `helps`, and `logo-clouds`.
 - **Selective asset inlining** — assets below `inlineAssetThresholdBytes` are base64-inlined; larger or remote-only assets stay as URLs. Host controls the network via `fetchAsset`.
 - **Two header-action modes** — end-to-end with `buildIR` or host-driven via the `anvilkit:export:request` event.
-- **Security-hardened escaping** — `escapeHtml` and `escapeAttr` enforced by a 24-test hostile-input battery. The escape contract is documented in [`docs/security/plugin-trust-model.md`](../../../docs/security/plugin-trust-model.md).
+- **Security-hardened escaping** — `escapeHtml` and `escapeAttr` enforced by a 24-test hostile-input battery, codified by the Anvilkit plugin trust model.
 - **Direct-format access** — `htmlFormat` is exported for headless export pipelines that don't run inside Studio.
 
 ## API reference
@@ -208,7 +208,7 @@ The package ships first-party HTML emitters for nine component types: `hero`, `n
 
 ### Escaping contract
 
-The escape contract lives in [`docs/security/plugin-trust-model.md`](../../../docs/security/plugin-trust-model.md) and is enforced by `security.test.ts` (24-test hostile-input battery). Custom emitters that bypass `escapeHtml` / `escapeAttr` are CI-blocked.
+The escape contract is enforced by `security.test.ts` (24-test hostile-input battery). Custom emitters that bypass `escapeHtml` / `escapeAttr` are CI-blocked.
 
 ### Alpha contract caveats
 
@@ -221,5 +221,3 @@ The emitted HTML/CSS string is not yet a stability contract. Class names, attrib
 ### See also
 
 - [`@anvilkit/plugin-export-react`](../plugin-export-react/README.md) — exports the same `PageIR` as `.tsx`/`.jsx` source files for developer hand-off.
-- [`docs/security/plugin-trust-model.md`](../../../docs/security/plugin-trust-model.md) — escape contract.
-- [`docs/architecture/export-pipeline.md`](../../../docs/architecture/export-pipeline.md) — full design.
