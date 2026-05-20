@@ -1,18 +1,18 @@
 import type {
-	ExportFormatDefinition,
-	IRAssetResolver,
-	StudioHeaderAction,
-	StudioPluginContext,
+  ExportFormatDefinition,
+  IRAssetResolver,
+  StudioHeaderAction,
+  StudioPluginContext,
 } from "@anvilkit/core/types";
 
 import type { HtmlExportOptions, IRBuilder } from "./types.js";
 
 const DEFAULT_HEADER_ACTION: Omit<StudioHeaderAction, "onClick"> = {
-	id: "export-html",
-	label: "Download HTML",
-	icon: "download",
-	group: "secondary",
-	order: 100,
+  id: "export-html",
+  label: "Download HTML",
+  icon: "download",
+  group: "secondary",
+  order: 100,
 };
 
 /**
@@ -33,51 +33,51 @@ const DEFAULT_HEADER_ACTION: Omit<StudioHeaderAction, "onClick"> = {
  *   `anvilkit:export:request`.
  */
 export function createExportHtmlHeaderAction(
-	format: ExportFormatDefinition<HtmlExportOptions>,
-	options: HtmlExportOptions,
-	runtime?: {
-		readonly getAssetResolvers?: () => readonly IRAssetResolver[];
-	},
+  format: ExportFormatDefinition<HtmlExportOptions>,
+  options: HtmlExportOptions,
+  runtime?: {
+    readonly getAssetResolvers?: () => readonly IRAssetResolver[];
+  },
 ): StudioHeaderAction {
-	const buildIR: IRBuilder | undefined = options.buildIR;
+  const buildIR: IRBuilder | undefined = options.buildIR;
 
-	return {
-		...DEFAULT_HEADER_ACTION,
-		onClick: async (ctx: StudioPluginContext) => {
-			if (!buildIR) {
-				ctx.log(
-					"info",
-					"HTML export requested. Pass a buildIR option to createHtmlExportPlugin " +
-						"to run the export end-to-end, or listen for the anvilkit:export:request " +
-						"event to handle it from the host.",
-				);
-				ctx.emit("anvilkit:export:request", {
-					formatId: format.id,
-					options,
-				});
-				return;
-			}
+  return {
+    ...DEFAULT_HEADER_ACTION,
+    onClick: async (ctx: StudioPluginContext) => {
+      if (!buildIR) {
+        ctx.log(
+          "info",
+          "HTML export requested. Pass a buildIR option to createHtmlExportPlugin " +
+            "to run the export end-to-end, or listen for the anvilkit:export:request " +
+            "event to handle it from the host.",
+        );
+        ctx.emit("anvilkit:export:request", {
+          formatId: format.id,
+          options,
+        });
+        return;
+      }
 
-			try {
-				const ir = await buildIR(ctx);
-				const result = await format.run(ir, options, {
-					assetResolvers: runtime?.getAssetResolvers?.() ?? [],
-				});
-				ctx.emit("anvilkit:export:ready", {
-					formatId: format.id,
-					content: result.content,
-					filename: result.filename,
-					mimeType: format.mimeType,
-					warnings: result.warnings,
-				});
-			} catch (error) {
-				ctx.log("error", "HTML export failed.", {
-					message: error instanceof Error ? error.message : String(error),
-				});
-				throw error;
-			}
-		},
-	};
+      try {
+        const ir = await buildIR(ctx);
+        const result = await format.run(ir, options, {
+          assetResolvers: runtime?.getAssetResolvers?.() ?? [],
+        });
+        ctx.emit("anvilkit:export:ready", {
+          formatId: format.id,
+          content: result.content,
+          filename: result.filename,
+          mimeType: format.mimeType,
+          warnings: result.warnings,
+        });
+      } catch (error) {
+        ctx.log("error", "HTML export failed.", {
+          message: error instanceof Error ? error.message : String(error),
+        });
+        throw error;
+      }
+    },
+  };
 }
 
 /**
@@ -88,13 +88,13 @@ export function createExportHtmlHeaderAction(
  * returned from `createExportHtmlHeaderAction(format, options)`.
  */
 export const exportHtmlHeaderAction: StudioHeaderAction = {
-	...DEFAULT_HEADER_ACTION,
-	onClick: async (ctx) => {
-		ctx.log(
-			"info",
-			"HTML export requested. Use createHtmlExportPlugin() to obtain a header " +
-				"action wired to a concrete format and options.",
-		);
-		ctx.emit("anvilkit:export:request", { formatId: "html", options: {} });
-	},
+  ...DEFAULT_HEADER_ACTION,
+  onClick: async (ctx) => {
+    ctx.log(
+      "info",
+      "HTML export requested. Use createHtmlExportPlugin() to obtain a header " +
+        "action wired to a concrete format and options.",
+    );
+    ctx.emit("anvilkit:export:request", { formatId: "html", options: {} });
+  },
 };

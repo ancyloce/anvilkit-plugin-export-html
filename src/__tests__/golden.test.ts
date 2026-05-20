@@ -12,35 +12,36 @@ import { sectionFixture } from "./__fixtures__/section.fixture.js";
 import { statisticsFixture } from "./__fixtures__/statistics.fixture.js";
 
 const fetchAsset = async () => ({
-	bytes: new Uint8Array([1, 2, 3, 4]),
-	contentType: "image/jpeg",
+  bytes: new Uint8Array([1, 2, 3, 4]),
+  contentType: "image/jpeg",
 });
 
 const fixtures = [
-	["hero", "Hero", heroFixture],
-	["navbar", "Navbar", navbarFixture],
-	["pricing-minimal", "Pricing Minimal", pricingMinimalFixture],
-	["bento-grid", "Bento Grid", bentoGridFixture],
-	["section", "Section", sectionFixture],
-	["statistics", "Statistics", statisticsFixture],
-	["blog-list", "Blog List", blogListFixture],
-	["helps", "Helps", helpsFixture],
-	["logo-clouds", "Logo Clouds", logoCloudsFixture],
+  ["hero", "Hero", heroFixture],
+  ["navbar", "Navbar", navbarFixture],
+  ["pricing-minimal", "Pricing Minimal", pricingMinimalFixture],
+  ["bento-grid", "Bento Grid", bentoGridFixture],
+  ["section", "Section", sectionFixture],
+  ["statistics", "Statistics", statisticsFixture],
+  ["blog-list", "Blog List", blogListFixture],
+  ["helps", "Helps", helpsFixture],
+  ["logo-clouds", "Logo Clouds", logoCloudsFixture],
 ] as const;
 
-it.each(
-	fixtures,
-)("renders %s fixture to a stable html document", async (slug, title, fixture) => {
-	const result = await htmlFormat.run(fixture, {
-		inlineStyles: true,
-		inlineAssetThresholdBytes: 0,
-		title,
-		fetchAsset,
-	});
+it.each(fixtures)(
+  "renders %s fixture to a stable html document",
+  async (slug, title, fixture) => {
+    const result = await htmlFormat.run(fixture, {
+      inlineStyles: true,
+      inlineAssetThresholdBytes: 0,
+      title,
+      fetchAsset,
+    });
 
-	expect(result.content).toMatchFileSnapshot(
-		fileURLToPath(
-			new URL(`./__snapshots__/${slug}.snap.html`, import.meta.url),
-		),
-	);
-});
+    expect(result.content).toMatchFileSnapshot(
+      fileURLToPath(
+        new URL(`./__snapshots__/${slug}.snap.html`, import.meta.url),
+      ),
+    );
+  },
+);

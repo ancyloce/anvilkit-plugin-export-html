@@ -7,49 +7,49 @@ import { heroFixture } from "./__fixtures__/hero.fixture.js";
 const studioConfig = StudioConfigSchema.parse({});
 
 function makeCtx(): StudioPluginContext {
-	return {
-		getData: () => ({ root: { props: {} }, content: [], zones: {} }),
-		getPuckApi: (() => {
-			throw new Error("getPuckApi should not be invoked in compile tests");
-		}) as unknown as StudioPluginContext["getPuckApi"],
-		studioConfig,
-		log: vi.fn(),
-		emit: vi.fn(),
-		registerAssetResolver: vi.fn(),
-	};
+  return {
+    getData: () => ({ root: { props: {} }, content: [], zones: {} }),
+    getPuckApi: (() => {
+      throw new Error("getPuckApi should not be invoked in compile tests");
+    }) as unknown as StudioPluginContext["getPuckApi"],
+    studioConfig,
+    log: vi.fn(),
+    emit: vi.fn(),
+    registerAssetResolver: vi.fn(),
+  };
 }
 
 describe("createHtmlExportPlugin registration", () => {
-	it("registers the html export format during compilePlugins", async () => {
-		const runtime = await compilePlugins([createHtmlExportPlugin()], makeCtx());
+  it("registers the html export format during compilePlugins", async () => {
+    const runtime = await compilePlugins([createHtmlExportPlugin()], makeCtx());
 
-		expect(runtime.exportFormats.has("html")).toBe(true);
-	});
+    expect(runtime.exportFormats.has("html")).toBe(true);
+  });
 
-	it("runs the registered html format and returns page.html", async () => {
-		const runtime = await compilePlugins([createHtmlExportPlugin()], makeCtx());
-		const format = runtime.exportFormats.get("html");
+  it("runs the registered html format and returns page.html", async () => {
+    const runtime = await compilePlugins([createHtmlExportPlugin()], makeCtx());
+    const format = runtime.exportFormats.get("html");
 
-		expect(format).toBeDefined();
+    expect(format).toBeDefined();
 
-		if (!format) {
-			throw new Error("Expected html export format to be registered");
-		}
+    if (!format) {
+      throw new Error("Expected html export format to be registered");
+    }
 
-		const result = await format.run(heroFixture, {});
+    const result = await format.run(heroFixture, {});
 
-		expect(result.content).toContain("<!doctype html>");
-		expect(result.filename).toBe("page.html");
-	});
+    expect(result.content).toContain("<!doctype html>");
+    expect(result.filename).toBe("page.html");
+  });
 
-	it("contributes the export-html header action when buildIR is configured", async () => {
-		const runtime = await compilePlugins(
-			[createHtmlExportPlugin({ buildIR: () => heroFixture })],
-			makeCtx(),
-		);
+  it("contributes the export-html header action when buildIR is configured", async () => {
+    const runtime = await compilePlugins(
+      [createHtmlExportPlugin({ buildIR: () => heroFixture })],
+      makeCtx(),
+    );
 
-		expect(
-			runtime.headerActions.some((action) => action.id === "export-html"),
-		).toBe(true);
-	});
+    expect(
+      runtime.headerActions.some((action) => action.id === "export-html"),
+    ).toBe(true);
+  });
 });
