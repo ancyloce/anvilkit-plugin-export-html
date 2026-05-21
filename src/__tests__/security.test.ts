@@ -14,7 +14,7 @@
 import type { PageIR, PageIRNode } from "@anvilkit/core/types";
 import { describe, expect, it } from "vitest";
 
-import { emitHtml, makeEmitContext } from "../emit-html.js";
+import { emitHtml, makeEmitContext } from "../emit/emit-html.js";
 
 function renderHero(props: Record<string, unknown>): string {
   const node: PageIRNode = { id: "hero", type: "Hero", props };

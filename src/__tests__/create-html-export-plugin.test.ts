@@ -8,7 +8,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import packageJson from "../../package.json";
 import { createHtmlExportPlugin } from "../plugin.js";
-import { htmlFormat } from "../format-definition.js";
+import { htmlFormat } from "../format/format-definition.js";
 
 const studioConfig = StudioConfigSchema.parse({});
 

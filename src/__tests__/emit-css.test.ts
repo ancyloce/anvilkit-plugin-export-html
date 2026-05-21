@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { emitCss } from "../emit-css.js";
+import { emitCss } from "../emit/emit-css.js";
 
 const BASE_RESET =
   ":root{color-scheme:light;font-family:Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.5;}" +

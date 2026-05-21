@@ -1,8 +1,8 @@
 import type { PageIR } from "@anvilkit/core/types";
 import { describe, expect, it } from "vitest";
 
-import { makeEmitContext, renderImage } from "../emit-html.js";
-import { htmlFormat } from "../format-definition.js";
+import { makeEmitContext, renderImage } from "../emit/emit-html.js";
+import { htmlFormat } from "../format/format-definition.js";
 import { blogListFixture } from "./__fixtures__/blog-list.fixture.js";
 
 describe("html export warnings", () => {

@@ -1,7 +1,7 @@
 import type { PageIRAsset } from "@anvilkit/core/types";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { htmlFormat } from "../format-definition.js";
-import { defaultFetchAsset, inlineAssets } from "../inline-assets.js";
+import { htmlFormat } from "../format/format-definition.js";
+import { defaultFetchAsset, inlineAssets } from "../asset/inline-assets.js";
 import { encodeBase64 } from "../internal/base64.js";
 
 const pngBytes = new Uint8Array([

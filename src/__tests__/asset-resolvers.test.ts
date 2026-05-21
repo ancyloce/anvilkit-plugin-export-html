@@ -1,8 +1,8 @@
 import type { PageIR, PageIRNode } from "@anvilkit/core/types";
 import { describe, expect, it, vi } from "vitest";
 
-import { htmlFormat } from "../format-definition.js";
-import { resolveHtmlAssetUrls } from "../resolve-assets.js";
+import { htmlFormat } from "../format/format-definition.js";
+import { resolveHtmlAssetUrls } from "../asset/resolve-assets.js";
 
 function createBlogIr(url: string): PageIR {
   return {

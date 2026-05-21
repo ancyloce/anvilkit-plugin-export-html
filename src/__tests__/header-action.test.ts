@@ -3,7 +3,7 @@ import type { PageIR, StudioPluginContext } from "@anvilkit/core/types";
 import { describe, expect, it, vi } from "vitest";
 
 import { createHtmlExportPlugin } from "../plugin.js";
-import { exportHtmlHeaderAction } from "../header-action.js";
+import { exportHtmlHeaderAction } from "../action/header-action.js";
 
 const studioConfig = StudioConfigSchema.parse({});
 

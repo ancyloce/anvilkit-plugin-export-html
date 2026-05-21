@@ -1,7 +1,7 @@
 import type { PageIR, PageIRNode } from "@anvilkit/core/types";
 import { Window } from "happy-dom";
 import { describe, expect, it } from "vitest";
-import { htmlFormat } from "../format-definition.js";
+import { htmlFormat } from "../format/format-definition.js";
 import { blogListFixture } from "./__fixtures__/blog-list.fixture.js";
 import { heroFixture } from "./__fixtures__/hero.fixture.js";
 import { pricingMinimalFixture } from "./__fixtures__/pricing-minimal.fixture.js";

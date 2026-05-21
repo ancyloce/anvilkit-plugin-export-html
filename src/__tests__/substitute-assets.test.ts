@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { substituteAssets } from "../substitute-assets.js";
+import { substituteAssets } from "../asset/substitute-assets.js";
 
 describe("substituteAssets", () => {
   it("substitutes data-asset-src in the canonical order", () => {

@@ -1,7 +1,7 @@
 import type { PageIR } from "@anvilkit/core/types";
 import { describe, expect, it } from "vitest";
 
-import { htmlFormat } from "../format-definition.js";
+import { htmlFormat } from "../format/format-definition.js";
 
 function makeIr(metadata: PageIR["metadata"]): PageIR {
   return {

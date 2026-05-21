@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { expect, it } from "vitest";
-import { htmlFormat } from "../format-definition.js";
+import { htmlFormat } from "../format/format-definition.js";
 import { bentoGridFixture } from "./__fixtures__/bento-grid.fixture.js";
 import { blogListFixture } from "./__fixtures__/blog-list.fixture.js";
 import { helpsFixture } from "./__fixtures__/helps.fixture.js";
