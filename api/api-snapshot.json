@@ -2143,17 +2143,17 @@
 		},
 		"1": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/create-html-export-plugin.ts",
+			"packagePath": "src/plugin.ts",
 			"qualifiedName": "createHtmlExportPlugin"
 		},
 		"2": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/create-html-export-plugin.ts",
+			"packagePath": "src/plugin.ts",
 			"qualifiedName": "createHtmlExportPlugin"
 		},
 		"3": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/create-html-export-plugin.ts",
+			"packagePath": "src/plugin.ts",
 			"qualifiedName": "opts"
 		},
 		"4": {

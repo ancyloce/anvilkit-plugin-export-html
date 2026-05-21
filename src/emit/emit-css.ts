@@ -1,4 +1,4 @@
-import type { HtmlExportOptions } from "./types.js";
+import type { HtmlExportOptions } from "../types/types.js";
 
 const BASE_CSS = [
   ":root{color-scheme:light;font-family:Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.5;}",

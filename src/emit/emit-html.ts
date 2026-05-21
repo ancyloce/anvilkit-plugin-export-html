@@ -1,7 +1,7 @@
 import type { ExportWarning, PageIR, PageIRNode } from "@anvilkit/core/types";
 
-import { escapeAttr, escapeHtml } from "./internal/escape-html.js";
-import type { HtmlExportOptions } from "./types.js";
+import { escapeAttr, escapeHtml } from "../internal/escape-html.js";
+import type { HtmlExportOptions } from "../types/types.js";
 
 type PropRecord = Readonly<Record<string, unknown>>;
 

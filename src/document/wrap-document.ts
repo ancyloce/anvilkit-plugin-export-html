@@ -1,4 +1,4 @@
-import { escapeAttr, escapeHtml } from "./internal/escape-html.js";
+import { escapeAttr, escapeHtml } from "../internal/escape-html.js";
 
 const DEFAULT_LANG = "en";
 

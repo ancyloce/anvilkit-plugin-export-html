@@ -3,13 +3,13 @@ import type {
   IRAssetResolver,
 } from "@anvilkit/core/types";
 
-import { emitCss } from "./emit-css.js";
-import { emitHtml, makeEmitContext } from "./emit-html.js";
-import { inlineAssets } from "./inline-assets.js";
-import { resolveHtmlAssetUrls } from "./resolve-assets.js";
-import { substituteAssets } from "./substitute-assets.js";
-import type { HtmlExportOptions } from "./types.js";
-import { wrapDocument } from "./wrap-document.js";
+import { emitCss } from "../emit/emit-css.js";
+import { emitHtml, makeEmitContext } from "../emit/emit-html.js";
+import { inlineAssets } from "../asset/inline-assets.js";
+import { resolveHtmlAssetUrls } from "../asset/resolve-assets.js";
+import { substituteAssets } from "../asset/substitute-assets.js";
+import type { HtmlExportOptions } from "../types/types.js";
+import { wrapDocument } from "../document/wrap-document.js";
 
 export const htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {
   id: "html",

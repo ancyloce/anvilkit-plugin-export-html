@@ -1,4 +1,4 @@
-import { escapeAttr } from "./internal/escape-html.js";
+import { escapeAttr } from "../internal/escape-html.js";
 
 function escapeRegex(input: string): string {
   return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

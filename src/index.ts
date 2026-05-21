@@ -1,12 +1,12 @@
-export { createHtmlExportPlugin } from "./create-html-export-plugin.js";
-export { htmlFormat } from "./format-definition.js";
+export { createHtmlExportPlugin } from "./plugin.js";
+export { htmlFormat } from "./format/format-definition.js";
 export {
-  createExportHtmlHeaderAction,
-  exportHtmlHeaderAction,
-} from "./header-action.js";
+	createExportHtmlHeaderAction,
+	exportHtmlHeaderAction,
+} from "./action/header-action.js";
 export type {
-  FetchAssetFn,
-  FetchAssetOptions,
-  HtmlExportOptions,
-  IRBuilder,
-} from "./types.js";
+	FetchAssetFn,
+	FetchAssetOptions,
+	HtmlExportOptions,
+	IRBuilder,
+} from "./types/types.js";

@@ -6,7 +6,7 @@ import type {
   PageIRNode,
 } from "@anvilkit/core/types";
 
-import { normalizeUrl } from "./emit-html.js";
+import { normalizeUrl } from "../emit/emit-html.js";
 
 const ASSET_REFERENCE_PREFIX = "asset://";
 const ASSET_PROP_KEYS = new Set([

@@ -1,7 +1,7 @@
 import type { ExportWarning, PageIRAsset } from "@anvilkit/core/types";
 
-import { encodeBase64 } from "./internal/base64.js";
-import type { FetchAssetFn } from "./types.js";
+import { encodeBase64 } from "../internal/base64.js";
+import type { FetchAssetFn } from "../types/types.js";
 
 interface InlineEntry {
   readonly assetId: string;
