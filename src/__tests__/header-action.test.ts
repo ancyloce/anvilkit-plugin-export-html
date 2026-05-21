@@ -1,9 +1,8 @@
 import { StudioConfigSchema } from "@anvilkit/core";
 import type { PageIR, StudioPluginContext } from "@anvilkit/core/types";
 import { describe, expect, it, vi } from "vitest";
-
-import { createHtmlExportPlugin } from "../plugin.js";
 import { exportHtmlHeaderAction } from "../action/header-action.js";
+import { createHtmlExportPlugin } from "../plugin.js";
 
 const studioConfig = StudioConfigSchema.parse({});
 

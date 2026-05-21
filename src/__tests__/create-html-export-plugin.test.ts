@@ -7,8 +7,8 @@ import type {
 import { describe, expect, it, vi } from "vitest";
 
 import packageJson from "../../package.json";
-import { createHtmlExportPlugin } from "../plugin.js";
 import { htmlFormat } from "../format/format-definition.js";
+import { createHtmlExportPlugin } from "../plugin.js";
 
 const studioConfig = StudioConfigSchema.parse({});
 

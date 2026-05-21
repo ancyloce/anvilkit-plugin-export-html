@@ -6,8 +6,8 @@ import type {
 
 import config from "../meta/config.json";
 import packageJson from "../package.json";
-import { htmlFormat } from "./format/format-definition.js";
 import { createExportHtmlHeaderAction } from "./action/header-action.js";
+import { htmlFormat } from "./format/format-definition.js";
 import type { HtmlExportOptions } from "./types/types.js";
 
 // `version` is derived from package.json so a Changesets bump can never drift
