@@ -674,7 +674,7 @@
 			}
 		},
 		{
-			"id": 14,
+			"id": 10,
 			"name": "exportHtmlHeaderAction",
 			"variant": "declaration",
 			"kind": 32,
@@ -726,7 +726,7 @@
 			"defaultValue": "..."
 		},
 		{
-			"id": 4,
+			"id": 11,
 			"name": "htmlFormat",
 			"variant": "declaration",
 			"kind": 32,
@@ -754,14 +754,14 @@
 			"defaultValue": "..."
 		},
 		{
-			"id": 5,
+			"id": 1,
 			"name": "createExportHtmlHeaderAction",
 			"variant": "declaration",
 			"kind": 64,
 			"flags": {},
 			"signatures": [
 				{
-					"id": 6,
+					"id": 2,
 					"name": "createExportHtmlHeaderAction",
 					"variant": "signature",
 					"kind": 4096,
@@ -864,7 +864,7 @@
 					},
 					"parameters": [
 						{
-							"id": 7,
+							"id": 3,
 							"name": "format",
 							"variant": "param",
 							"kind": 32768,
@@ -889,7 +889,7 @@
 							}
 						},
 						{
-							"id": 8,
+							"id": 4,
 							"name": "options",
 							"variant": "param",
 							"kind": 32768,
@@ -902,7 +902,7 @@
 							}
 						},
 						{
-							"id": 9,
+							"id": 5,
 							"name": "runtime",
 							"variant": "param",
 							"kind": 32768,
@@ -912,14 +912,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 10,
+									"id": 6,
 									"name": "__type",
 									"variant": "declaration",
 									"kind": 65536,
 									"flags": {},
 									"children": [
 										{
-											"id": 11,
+											"id": 7,
 											"name": "getAssetResolvers",
 											"variant": "declaration",
 											"kind": 1024,
@@ -930,14 +930,14 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 12,
+													"id": 8,
 													"name": "__type",
 													"variant": "declaration",
 													"kind": 65536,
 													"flags": {},
 													"signatures": [
 														{
-															"id": 13,
+															"id": 9,
 															"name": "__type",
 															"variant": "signature",
 															"kind": 4096,
@@ -969,7 +969,7 @@
 										{
 											"title": "Properties",
 											"children": [
-												11
+												7
 											]
 										}
 									]
@@ -991,21 +991,21 @@
 			]
 		},
 		{
-			"id": 1,
+			"id": 12,
 			"name": "createHtmlExportPlugin",
 			"variant": "declaration",
 			"kind": 64,
 			"flags": {},
 			"signatures": [
 				{
-					"id": 2,
+					"id": 13,
 					"name": "createHtmlExportPlugin",
 					"variant": "signature",
 					"kind": 4096,
 					"flags": {},
 					"parameters": [
 						{
-							"id": 3,
+							"id": 14,
 							"name": "opts",
 							"variant": "param",
 							"kind": 32768,
@@ -1051,15 +1051,15 @@
 		{
 			"title": "Variables",
 			"children": [
-				14,
-				4
+				10,
+				11
 			]
 		},
 		{
 			"title": "Functions",
 			"children": [
-				5,
-				1
+				1,
+				12
 			]
 		}
 	],
@@ -2143,187 +2143,187 @@
 		},
 		"1": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/plugin.ts",
-			"qualifiedName": "createHtmlExportPlugin"
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "createExportHtmlHeaderAction"
 		},
 		"2": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "createExportHtmlHeaderAction"
+		},
+		"3": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "format"
+		},
+		"4": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "options"
+		},
+		"5": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "runtime"
+		},
+		"6": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "__type"
+		},
+		"7": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "__type.getAssetResolvers"
+		},
+		"8": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "__type"
+		},
+		"9": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "__type"
+		},
+		"10": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/action/header-action.ts",
+			"qualifiedName": "exportHtmlHeaderAction"
+		},
+		"11": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/format/format-definition.ts",
+			"qualifiedName": "htmlFormat"
+		},
+		"12": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/plugin.ts",
 			"qualifiedName": "createHtmlExportPlugin"
 		},
-		"3": {
+		"13": {
+			"packageName": "@anvilkit/plugin-export-html",
+			"packagePath": "src/plugin.ts",
+			"qualifiedName": "createHtmlExportPlugin"
+		},
+		"14": {
 			"packageName": "@anvilkit/plugin-export-html",
 			"packagePath": "src/plugin.ts",
 			"qualifiedName": "opts"
 		},
-		"4": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/format-definition.ts",
-			"qualifiedName": "htmlFormat"
-		},
-		"5": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "createExportHtmlHeaderAction"
-		},
-		"6": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "createExportHtmlHeaderAction"
-		},
-		"7": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "format"
-		},
-		"8": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "options"
-		},
-		"9": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "runtime"
-		},
-		"10": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "__type"
-		},
-		"11": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "__type.getAssetResolvers"
-		},
-		"12": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "__type"
-		},
-		"13": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "__type"
-		},
-		"14": {
-			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/header-action.ts",
-			"qualifiedName": "exportHtmlHeaderAction"
-		},
 		"15": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "FetchAssetFn"
 		},
 		"16": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "__type"
 		},
 		"17": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "__type"
 		},
 		"18": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "__type"
 		},
 		"19": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "__type.bytes"
 		},
 		"20": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "__type.contentType"
 		},
 		"21": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "url"
 		},
 		"22": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "opts"
 		},
 		"23": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "FetchAssetOptions"
 		},
 		"24": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "FetchAssetOptions.maxBytes"
 		},
 		"25": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions"
 		},
 		"26": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.inlineStyles"
 		},
 		"27": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.inlineAssetThresholdBytes"
 		},
 		"28": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.title"
 		},
 		"29": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.fetchAsset"
 		},
 		"30": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.lang"
 		},
 		"31": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.buildIR"
 		},
 		"32": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.assetResolvers"
 		},
 		"33": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "HtmlExportOptions.headerAction"
 		},
 		"36": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "IRBuilder"
 		},
 		"37": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "__type"
 		},
 		"38": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "__type"
 		},
 		"39": {
 			"packageName": "@anvilkit/plugin-export-html",
-			"packagePath": "src/types.ts",
+			"packagePath": "src/types/types.ts",
 			"qualifiedName": "ctx"
 		}
 	},
