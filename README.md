@@ -1,6 +1,6 @@
 # @anvilkit/plugin-export-html
 
-> **Alpha (`0.1.3`).** The package surface is implemented and tested, but the emitted HTML/CSS contract may evolve before `1.0.0`.
+> **Alpha (`0.1.4`).** The package surface is implemented and tested, but the emitted HTML/CSS contract may evolve before `1.0.0`.
 
 HTML export plugin for Anvilkit Studio. Turns `PageIR` documents into standalone HTML with emitted CSS, optional asset inlining, and an opt-in Studio header action for interactive export flows when the host supplies a `buildIR` callback. The reference implementation of the Anvilkit export-plugin contract — security-hardened against hostile input by a 24-test battery in CI.
 
