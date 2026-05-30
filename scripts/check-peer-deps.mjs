@@ -64,9 +64,9 @@ async function main() {
 		// Cheap structural comparison: every disjunct in the core range
 		// must show up in the plugin range, otherwise the plugin is
 		// narrower. We compare on the leading major specifier of each
-		// disjunct (e.g. "^18", "^19") rather than parsing semver, so
+		// disjunct (e.g. ">=19.0.0", "^19") rather than parsing semver, so
 		// the check tolerates differences in the minor/patch tail
-		// (`^18` vs `^18.2.0`) but still flags missing majors.
+		// (`>=19.0.0` vs `>=19.0.0`) but still flags missing majors.
 		const majorOf = (part) => {
 			const match = /^[\^~]?(\d+)/.exec(part);
 			return match ? match[1] : null;
