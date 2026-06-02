@@ -77,6 +77,34 @@ describe("emitHtml", () => {
 		expectRendered("LogoClouds", "ak-logo-clouds");
 	});
 
+	it("emits an <img> for a standalone Image component", () => {
+		const result = renderNode("Image", {
+			src: "data:image/png;base64,iVBORw0KGgo=",
+			alt: "A picture",
+		});
+
+		// `=` padding is HTML-attribute-escaped (`&#61;`), so assert the
+		// unescaped data-URL prefix (mirrors the demo E2E's assertion).
+		expect(result.html).toContain('<img src="data:image/png;base64,');
+		expect(result.html).toContain('alt="A picture"');
+	});
+
+	it("emits nothing for an Image with no usable src", () => {
+		const result = renderNode("Image", { alt: "x" });
+
+		expect(result.html).toBe("");
+	});
+
+	it("never emits a raw unresolved asset:// reference", () => {
+		const result = renderNode("Image", {
+			src: "asset://abc-123",
+			alt: "x",
+		});
+
+		expect(result.html).toBe("");
+		expect(result.html).not.toContain("asset://");
+	});
+
 	it("escapes script tags in text content", () => {
 		const payload = "<script>alert(1)</script>";
 		const result = renderNode("Hero", {

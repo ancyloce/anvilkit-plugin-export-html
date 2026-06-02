@@ -66,6 +66,8 @@ const EMITTERS: Readonly<
 	Helps: emitHelps,
 	"logo-clouds": emitLogoClouds,
 	LogoClouds: emitLogoClouds,
+	image: emitImage,
+	Image: emitImage,
 };
 
 export function makeEmitContext(): EmitContext {
@@ -798,6 +800,30 @@ function renderHrefAttributes(href: string, openInNewTab: boolean): string {
 		'"' +
 		(openInNewTab ? ' target="_blank" rel="noreferrer noopener"' : "")
 	);
+}
+
+/**
+ * Standalone image component (e.g. the asset-manager's inserted
+ * `kindToComponentName("image")` node). The `src` is expected to already be a
+ * resolved URL — `asset://` references are rewritten upstream by
+ * `resolveHtmlAssetUrls` (the `src` prop key is in `ASSET_PROP_KEYS`).
+ */
+function emitImage(node: PageIRNode, ctx: EmitContext): string {
+	const src = getFirstString(node.props, [
+		"src",
+		"url",
+		"imageSrc",
+		"imageUrl",
+	]);
+	// Defense-in-depth: an `asset://` ref means resolution did not run (or the
+	// asset was dropped). `resolveHtmlAssetUrls` already rewrites these to ""
+	// upstream, but guard here too so a pre-resolution call can never leak a
+	// raw, unrenderable `asset://` reference into the output.
+	if (src.startsWith("asset://")) {
+		return "";
+	}
+	const alt = getFirstString(node.props, ["alt", "title"]);
+	return renderImage(src, alt, ctx, "");
 }
 
 export function renderImage(
