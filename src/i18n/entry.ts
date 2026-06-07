@@ -1,0 +1,47 @@
+/**
+ * @file The `exportHtml` registry entry (pure data — no React) plus the
+ * `AnvilkitMessages` type augmentation.
+ *
+ * The plugin is headless (no `./ui` subpath), so the only in-Studio chrome
+ * string is the header action label, resolved via `StudioHeaderAction.labelKey`
+ * against core's `EditorI18nProvider` once `register()` contributes this entry.
+ * Message content lives in `i18n/messages/<locale>.json`; English ships inline
+ * and other locales lazy-load.
+ *
+ * Note: the export-format display label ("HTML") is intentionally NOT localized
+ * here — `ExportFormatDefinition` has no `labelKey` and `PublishPanel` renders
+ * `format.label` raw, so localizing it needs a (small, additive) core contract
+ * change shared by all export plugins, not a per-plugin edit.
+ */
+
+import type { RegistryEntry } from "@anvilkit/core/i18n";
+
+// Messages live at the plugin-root `i18n/messages/` (shipped via the package
+// `files`). Imported from outside `src/` so the bundleless rslib build keeps
+// them external `.json` — same pattern as `meta/config.json`.
+import enMessages from "../../i18n/messages/en.json" with { type: "json" };
+
+/** Static lazy-pack map (avoids a dynamic template `import()` under rslib). */
+const LOCALE_PACKS: Readonly<
+	Record<string, () => Promise<{ readonly default: Record<string, string> }>>
+> = {
+	zh: () => import("../../i18n/messages/zh.json", { with: { type: "json" } }),
+};
+
+/** The registry entry contributed to the catalog (core prepends `studio.*`). */
+export const EXPORT_HTML_ENTRY: RegistryEntry = {
+	namespace: "exportHtml",
+	en: enMessages,
+	loadMessages: async (locale) => {
+		const pack = LOCALE_PACKS[locale];
+		return pack === undefined ? {} : (await pack()).default;
+	},
+};
+
+/** Exact key union for the `AnvilkitMessages` augmentation. */
+export type ExportHtmlMessageKey = keyof typeof enMessages;
+
+// Augment the public key registry so `useT("exportHtml.*")` autocompletes.
+declare module "@anvilkit/core/i18n" {
+	interface AnvilkitMessages extends Record<ExportHtmlMessageKey, string> {}
+}

@@ -10,6 +10,7 @@ import config from "../meta/config.json";
 import packageJson from "../package.json";
 import { createExportHtmlHeaderAction } from "./action/header-action.js";
 import { htmlFormat } from "./format/format-definition.js";
+import { EXPORT_HTML_ENTRY } from "./i18n/entry.js";
 import type { HtmlExportOptions } from "./types/types.js";
 
 // `version` is derived from package.json so a Changesets bump can never drift
@@ -37,6 +38,10 @@ export function createHtmlExportPlugin(
 	return {
 		meta: htmlExportPluginMeta,
 		register(ctx) {
+			// Contribute the `exportHtml` catalog so the header action's
+			// `labelKey` resolves in-chrome via core's EditorI18nProvider.
+			ctx.registerMessages(EXPORT_HTML_ENTRY);
+
 			const headerActions = shouldRegisterHeaderAction
 				? [
 						createExportHtmlHeaderAction(boundFormat, opts, {

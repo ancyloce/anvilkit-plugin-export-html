@@ -12,6 +12,7 @@ import type { HtmlExportOptions } from "../types/types.js";
 
 export const htmlFormat: ExportFormatDefinition<HtmlExportOptions> = {
 	id: "html",
+	labelKey: "exportHtml.format.html",
 	label: "HTML",
 	extension: "html",
 	mimeType: "text/html",

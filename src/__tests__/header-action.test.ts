@@ -16,6 +16,7 @@ function makeCtx(): StudioPluginContext {
 		log: vi.fn(),
 		emit: vi.fn(),
 		registerAssetResolver: vi.fn(),
+		registerMessages: vi.fn(),
 	};
 }
 

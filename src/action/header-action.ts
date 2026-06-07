@@ -9,6 +9,7 @@ import type { HtmlExportOptions, IRBuilder } from "../types/types.js";
 
 const DEFAULT_HEADER_ACTION: Omit<StudioHeaderAction, "onClick"> = {
 	id: "export-html",
+	labelKey: "exportHtml.action.download",
 	label: "Download HTML",
 	icon: "download",
 	group: "secondary",
