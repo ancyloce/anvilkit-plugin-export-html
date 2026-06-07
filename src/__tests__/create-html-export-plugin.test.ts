@@ -191,7 +191,7 @@ describe("createHtmlExportPlugin", () => {
 		expect(runtime.headerActions[0]).toEqual(
 			expect.objectContaining({
 				id: "export-html",
-				label: "Download HTML",
+				labelKey: "exportHtml.action.download",
 				icon: "download",
 				group: "secondary",
 			}),
