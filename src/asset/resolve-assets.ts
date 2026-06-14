@@ -9,6 +9,17 @@ import type {
 import { normalizeUrl } from "../emit/emit-html.js";
 
 const ASSET_REFERENCE_PREFIX = "asset://";
+const DESIGN_REFERENCE_PREFIX = "design://";
+/** Reference schemes the export resolves through the resolver chain. */
+const REFERENCE_PREFIXES = [
+	ASSET_REFERENCE_PREFIX,
+	DESIGN_REFERENCE_PREFIX,
+] as const;
+// Mirrors `@anvilkit/ir`'s `ASSET_KEY_PATTERN`, plus `previewUrl`: a DesignBlock
+// stores a `design://<designId>` reference there (its preview bytes live in the
+// canvas plugin's object-URL store, off Puck undo history), so it must run
+// through the resolver chain — the `design://` resolver rewrites it to the
+// self-contained preview data URL.
 const ASSET_PROP_KEYS = new Set([
 	"src",
 	"imageUrl",
@@ -23,6 +34,7 @@ const ASSET_PROP_KEYS = new Set([
 	"backgroundImage",
 	"poster",
 	"thumbnailSrc",
+	"previewUrl",
 ]);
 
 interface AssetReferenceInfo {
@@ -31,6 +43,9 @@ interface AssetReferenceInfo {
 	readonly allowSafeDataImage?: boolean;
 }
 
+// Mirrors the React exporter: `previewUrl` may inline a `data:image/...`
+// preview (resolved from a DesignBlock's `design://` reference); the
+// `isSafeDataImageUrl` regex still restricts it to real image mime types.
 const SAFE_DATA_IMAGE_KEYS = new Set([
 	"src",
 	"imageUrl",
@@ -39,6 +54,7 @@ const SAFE_DATA_IMAGE_KEYS = new Set([
 	"backgroundImage",
 	"poster",
 	"thumbnailSrc",
+	"previewUrl",
 ]);
 
 export async function resolveHtmlAssetUrls(
@@ -301,11 +317,15 @@ function cloneValue(
 }
 
 function parseAssetId(url: string): string | null {
-	if (!url.startsWith(ASSET_REFERENCE_PREFIX)) {
+	// `asset://<id>` (asset-manager) and `design://<designId>[/<artboardId>]`
+	// (canvas DesignBlock preview) are both resolvable references — the resolved
+	// URL runs through the same `normalizeUrl` validation either way.
+	const prefix = REFERENCE_PREFIXES.find((p) => url.startsWith(p));
+	if (prefix === undefined) {
 		return null;
 	}
 
-	const assetId = url.slice(ASSET_REFERENCE_PREFIX.length).trim();
+	const assetId = url.slice(prefix.length).trim();
 	return assetId === "" ? null : assetId;
 }
 
