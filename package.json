@@ -1,6 +1,6 @@
 {
 	"name": "@anvilkit/plugin-export-html",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"description": "HTML export format for Anvilkit Studio (Puck-native headless page builder).",
 	"type": "module",
 	"main": "./dist/index.cjs",
