@@ -2,7 +2,7 @@
 	"$schema": "https://typedoc.org/schema.json",
 	"externalSymbolLinkMappings": {
 		"@anvilkit/core": {
-			"PageIR": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
+			"PageIR": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/runtime/core/src/types/ir.ts"
 		}
 	}
 }

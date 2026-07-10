@@ -162,7 +162,7 @@
 								"kind": "inline-tag",
 								"tag": "@link",
 								"text": "PageIR",
-								"target": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
+								"target": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/runtime/core/src/types/ir.ts"
 							},
 							{
 								"kind": "text",
@@ -563,7 +563,7 @@
 						"kind": "inline-tag",
 						"tag": "@link",
 						"text": "PageIR",
-						"target": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
+						"target": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/runtime/core/src/types/ir.ts"
 					},
 					{
 						"kind": "text",
@@ -641,7 +641,7 @@
 										},
 										"name": "PageIR",
 										"package": "@anvilkit/core",
-										"externalUrl": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
+										"externalUrl": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/runtime/core/src/types/ir.ts"
 									},
 									{
 										"type": "reference",
@@ -660,7 +660,7 @@
 												},
 												"name": "PageIR",
 												"package": "@anvilkit/core",
-												"externalUrl": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/core/src/types/ir.ts"
+												"externalUrl": "https://github.com/ancyloce/anvilkit-studio/blob/main/packages/runtime/core/src/types/ir.ts"
 											}
 										],
 										"name": "Promise",
