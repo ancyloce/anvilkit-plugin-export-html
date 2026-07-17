@@ -668,16 +668,21 @@ function emitLogoClouds(node: PageIRNode, ctx: EmitContext): string {
 	const propItems = getRecordArrayProp(node.props, "items");
 	const items: ReadonlyArray<{ label: string; src: string }> =
 		propItems.length > 0
-			? propItems
-					.map((item) => ({
-						label: getFirstString(item, ["label", "alt", "name"], "Logo"),
-						src:
-							normalizeUrl(
-								getFirstString(item, ["src", "imageUrl", "imageSrc", "url"]),
-								{ allowSafeDataImage: true },
-							) ?? "",
-					}))
-					.filter((item) => item.src !== "")
+			? propItems.flatMap((item) => {
+					const src =
+						normalizeUrl(
+							getFirstString(item, ["src", "imageUrl", "imageSrc", "url"]),
+							{ allowSafeDataImage: true },
+						) ?? "";
+					return src === ""
+						? []
+						: [
+								{
+									label: getFirstString(item, ["label", "alt", "name"], "Logo"),
+									src,
+								},
+							];
+				})
 			: LOGO_CLOUD_DEFAULT_ITEMS;
 
 	return (

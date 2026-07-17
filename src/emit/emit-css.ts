@@ -45,8 +45,10 @@ export function emitCss(
 
 	const rules = Array.from(usedClassnames)
 		.sort()
-		.map((classname) => CSS_MANIFEST[classname] ?? "")
-		.filter(Boolean)
+		.flatMap((classname) => {
+			const rule = CSS_MANIFEST[classname];
+			return rule === undefined ? [] : [rule];
+		})
 		.join("");
 
 	return "<style>" + BASE_CSS + rules + "</style>";
